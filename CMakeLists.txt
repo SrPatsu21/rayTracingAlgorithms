@@ -30,33 +30,33 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 # ---------------- COMMON LIBRARY ------------------------------
 # Shared code between client and server
 # ============================================================
-file(GLOB_RECURSE COMMON_SOURCES
-    src/common/*.cpp
-)
+# file(GLOB_RECURSE COMMON_SOURCES
+#     src/common/*.cpp
+# )
 
-add_library(game_common STATIC ${COMMON_SOURCES})
-target_include_directories(game_common PUBLIC src/common)
+# add_library(game_common STATIC ${COMMON_SOURCES})
+# target_include_directories(game_common PUBLIC src/common)
 
 # ============================================================
 # ---------------- SERVER EXECUTABLE ---------------------------
 # Headless, no graphics, container-friendly
 # ============================================================
-file(GLOB_RECURSE SERVER_SOURCES
-    src/server/*.cpp
-)
+# file(GLOB_RECURSE SERVER_SOURCES
+#     src/server/*.cpp
+# )
 
-add_executable(${PROJECT_NAME}_server ${SERVER_SOURCES})
+# add_executable(${PROJECT_NAME}_server ${SERVER_SOURCES})
 
-target_link_libraries(${PROJECT_NAME}_server
-    game_common
-)
+# target_link_libraries(${PROJECT_NAME}_server
+#     game_common
+# )
 
-if(UNIX)
-    target_link_libraries(${PROJECT_NAME}_server
-        pthread
-        dl
-    )
-endif()
+# if(UNIX)
+#     target_link_libraries(${PROJECT_NAME}_server
+#         pthread
+#         dl
+#     )
+# endif()
 
 # ============================================================
 # ---------------- CLIENT EXECUTABLE ---------------------------
@@ -146,8 +146,8 @@ file(MAKE_DIRECTORY ${COMPILED_SHADER_DIR})
 set(SHADERS
     triangle.frag.glsl
     triangle.vert.glsl
-    particle.frag.glsl
-    particle.vert.glsl
+    # particle.frag.glsl
+    # particle.vert.glsl
 )
 
 set(SHADER_OUTPUTS "")
@@ -250,7 +250,7 @@ if(WIN32)
     )
 
     target_link_libraries(${PROJECT_NAME}_client
-        game_common
+        # game_common
         glfw
         assimp
         vulkan-1
@@ -259,7 +259,7 @@ if(WIN32)
     )
 elseif(UNIX)
     target_link_libraries(${PROJECT_NAME}_client
-        game_common
+        # game_common
         glfw
         Vulkan::Vulkan
         glm::glm
@@ -286,4 +286,4 @@ add_custom_target(CreateModsDir ALL
 # Output names
 # ============================================================
 set_target_properties(${PROJECT_NAME}_client PROPERTIES OUTPUT_NAME "${PROJECT_NAME}_client")
-set_target_properties(${PROJECT_NAME}_server PROPERTIES OUTPUT_NAME "${PROJECT_NAME}_server")
+# set_target_properties(${PROJECT_NAME}_server PROPERTIES OUTPUT_NAME "${PROJECT_NAME}_server")

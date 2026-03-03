@@ -1,7 +1,7 @@
 services:
     vulkan-compiler:
         image: srpatsu21/dear-glfw-vulkan-compiler:1.1.0
-        container_name: rayTracingp ~Compiler
+        container_name: rayTracingpCompiler
         stdin_open: true
         tty: true
         working_dir: /workspace
