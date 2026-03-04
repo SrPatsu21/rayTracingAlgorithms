@@ -1,180 +1,60 @@
-#include <vulkan/vulkan.h>
-#include <GLFW/glfw3.h>
-
-#include "imgui.h"
-#include "backends/imgui_impl_glfw.h"
-#include "backends/imgui_impl_vulkan.h"
+#include "color.h"
+#include "ray.h"
+#include "vec3.h"
 
 #include <iostream>
-#include <vector>
-#include <stdexcept>
+
+color ray_color(const ray& r) {
+    vec3 unit_direction = unit_vector(r.direction());
+    auto a = 0.5*(unit_direction.x() + 1.0);
+    return (1.0-a)*color(1.0, 1.0, 1.0) + a*color(0.5, 0.7, 1.0);
+}
 
 int main() {
-    if (!glfwInit()) return -1;
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-    GLFWwindow* window = glfwCreateWindow(800, 600, "ImGui Vulkan Minimal", nullptr, nullptr);
 
-    VkInstance instance;
-    {
-        VkApplicationInfo app{VK_STRUCTURE_TYPE_APPLICATION_INFO};
-        app.pApplicationName = "Mini";
-        app.apiVersion = VK_API_VERSION_1_0;
+    // Image
 
-        uint32_t extCount = 0;
-        const char** exts = glfwGetRequiredInstanceExtensions(&extCount);
+    auto aspect_ratio = 16.0 / 9.0;
+    int image_width = 400;
 
-        VkInstanceCreateInfo ci{VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO};
-        ci.pApplicationInfo = &app;
-        ci.enabledExtensionCount = extCount;
-        ci.ppEnabledExtensionNames = exts;
+    // Calculate the image height, and ensure that it's at least 1.
+    int image_height = int(image_width / aspect_ratio);
+    image_height = (image_height < 1) ? 1 : image_height;
 
-        vkCreateInstance(&ci, nullptr, &instance);
-    }
+    // Camera
 
-    VkSurfaceKHR surface;
-    glfwCreateWindowSurface(instance, window, nullptr, &surface);
+    auto focal_length = 1.0;
+    auto viewport_height = 2.0;
+    auto viewport_width = viewport_height * (double(image_width)/image_height);
+    auto camera_center = point3(0, 0, 0);
 
-    uint32_t gpuCount = 0;
-    vkEnumeratePhysicalDevices(instance, &gpuCount, nullptr);
-    std::vector<VkPhysicalDevice> gpus(gpuCount);
-    vkEnumeratePhysicalDevices(instance, &gpuCount, gpus.data());
-    VkPhysicalDevice gpu = gpus[0];
+    // Calculate the vectors across the horizontal and down the vertical viewport edges.
+    auto viewport_u = vec3(viewport_width, 0, 0);
+    auto viewport_v = vec3(0, -viewport_height, 0);
 
-    uint32_t qCount = 0;
-    vkGetPhysicalDeviceQueueFamilyProperties(gpu, &qCount, nullptr);
-    std::vector<VkQueueFamilyProperties> qProps(qCount);
-    vkGetPhysicalDeviceQueueFamilyProperties(gpu, &qCount, qProps.data());
+    // Calculate the horizontal and vertical delta vectors from pixel to pixel.
+    auto pixel_delta_u = viewport_u / image_width;
+    auto pixel_delta_v = viewport_v / image_height;
 
-    int gfxIndex = -1;
-    for (uint32_t i = 0; i < qCount; i++) {
-        VkBool32 present = VK_FALSE;
-        vkGetPhysicalDeviceSurfaceSupportKHR(gpu, i, surface, &present);
-        if ((qProps[i].queueFlags & VK_QUEUE_GRAPHICS_BIT) && present) {
-            gfxIndex = i;
-            break;
+    // Calculate the location of the upper left pixel.
+    auto viewport_upper_left = camera_center - vec3(0, 0, focal_length) - viewport_u/2 - viewport_v/2;
+    auto pixel00_loc = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
+
+    // Render
+
+    std::cout << "P3\n" << image_width << " " << image_height << "\n255\n";
+
+    for (int j = 0; j < image_height; j++) {
+        std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
+        for (int i = 0; i < image_width; i++) {
+            auto pixel_center = pixel00_loc + (i * pixel_delta_u) + (j * pixel_delta_v);
+            auto ray_direction = pixel_center - camera_center;
+            ray r(camera_center, ray_direction);
+
+            color pixel_color = ray_color(r);
+            write_color(std::cout, pixel_color);
         }
     }
 
-    VkDevice device;
-    VkQueue queue;
-    {
-        float prio = 1.0f;
-        VkDeviceQueueCreateInfo qci{VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO};
-        qci.queueFamilyIndex = gfxIndex;
-        qci.queueCount = 1;
-        qci.pQueuePriorities = &prio;
-
-        VkDeviceCreateInfo di{VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO};
-        di.queueCreateInfoCount = 1;
-        di.pQueueCreateInfos = &qci;
-
-        vkCreateDevice(gpu, &di, nullptr, &device);
-        vkGetDeviceQueue(device, gfxIndex, 0, &queue);
-    }
-
-    VkRenderPass renderPass;
-    {
-        VkAttachmentDescription att{};
-        att.format = VK_FORMAT_B8G8R8A8_UNORM;
-        att.samples = VK_SAMPLE_COUNT_1_BIT;
-        att.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-        att.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-        att.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-        att.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
-
-        VkAttachmentReference ref{};
-        ref.attachment = 0;
-        ref.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-
-        VkSubpassDescription sp{};
-        sp.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
-        sp.colorAttachmentCount = 1;
-        sp.pColorAttachments = &ref;
-
-        VkRenderPassCreateInfo rp{VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO};
-        rp.attachmentCount = 1;
-        rp.pAttachments = &att;
-        rp.subpassCount = 1;
-        rp.pSubpasses = &sp;
-
-        vkCreateRenderPass(device, &rp, nullptr, &renderPass);
-    }
-
-    VkDescriptorPoolSize pool_sizes[] = {
-        { VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1000 },
-    };
-    VkDescriptorPoolCreateInfo pool_info{};
-    pool_info.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-    pool_info.poolSizeCount = 1;
-    pool_info.pPoolSizes = pool_sizes;
-    pool_info.maxSets = 1000;
-    VkDescriptorPool descriptorPool;
-    vkCreateDescriptorPool(device, &pool_info, nullptr, &descriptorPool);
-
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO();
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-    ImGui::StyleColorsDark();
-
-    ImGui_ImplGlfw_InitForVulkan(window, true);
-
-    ImGui_ImplVulkan_InitInfo init_info{};
-    init_info.Instance = instance;
-    init_info.PhysicalDevice = gpu;
-    init_info.Device = device;
-    init_info.QueueFamily = gfxIndex;
-    init_info.Queue = queue;
-    init_info.PipelineCache = VK_NULL_HANDLE;
-    init_info.DescriptorPool = descriptorPool;
-    init_info.MinImageCount = 2;
-    init_info.ImageCount = 2;
-    init_info.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
-    init_info.Allocator = nullptr;
-    init_info.RenderPass = renderPass;
-
-    ImGui_ImplVulkan_Init(&init_info);
-
-    ImGui::GetIO().Fonts->AddFontDefault();
-
-    uint32_t imageCount = 2;
-    std::vector<VkImage> swapchainImages(imageCount);
-    std::vector<VkFramebuffer> framebuffers(imageCount);
-    std::vector<VkCommandBuffer> commandBuffers(imageCount);
-
-    while (!glfwWindowShouldClose(window)) {
-        glfwPollEvents();
-
-        ImGui_ImplVulkan_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
-        ImGui::Begin("Demo Window");
-        ImGui::Text("Hello Vulkan + ImGui!");
-        ImGui::End();
-
-        ImGui::Render();
-
-        VkClearValue clear{};
-        clear.color = {{0.1f, 0.2f, 0.3f, 1.0f}};
-
-        VkRenderPassBeginInfo rpbi{VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO};
-        rpbi.renderPass = renderPass;
-        rpbi.framebuffer = framebuffers[0];
-        rpbi.renderArea.offset = {0, 0};
-        rpbi.renderArea.extent = {800, 600};
-        rpbi.clearValueCount = 1;
-        rpbi.pClearValues = &clear;
-    }
-
-    ImGui_ImplVulkan_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
-    vkDestroyDescriptorPool(device, descriptorPool, nullptr);
-    vkDestroyRenderPass(device, renderPass, nullptr);
-    vkDestroyDevice(device, nullptr);
-    glfwDestroyWindow(window);
-    glfwTerminate();
-
-    return 0;
+    std::clog << "\rDone.                 \n";
 }
