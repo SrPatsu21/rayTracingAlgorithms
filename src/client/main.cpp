@@ -18,7 +18,6 @@ int main() {
     image_height = (image_height < 1) ? 1 : image_height;
 
     // World
-
     hittable_list world;
 
     // world.add(make_shared<sphere>(point3(0, 0, -1), 0.5));
@@ -46,6 +45,7 @@ int main() {
 
     cam.aspect_ratio = 16.0 / 9.0;
     cam.image_width  = 400;
+    cam.samples_per_pixel = 16;
 
     cam.render(world);
 }
