@@ -6,7 +6,7 @@
 #include "rtweekend.h"
 
 class hittable_list : public hittable {
-  public:
+public:
     std::vector<shared_ptr<hittable>> objects;
 
     hittable_list() {}
