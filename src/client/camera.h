@@ -7,7 +7,6 @@ class camera {
 public:
     double aspect_ratio = 1.0; // Ratio of image width over height
     int image_width  = 100; // Rendered image width in pixel count
-    int samples_per_pixel = 10; // Count of random samples for each pixel
 
     void render(const hittable& world) {
         initialize();
@@ -100,11 +99,10 @@ private:
         // Construct a camera ray originating from the origin and directed at randomly sampled
         // point around the pixel location i, j.
 
-        vec3 offset = sample_square();
-        color pixel_sample = pixel00_loc + ((i + offset.x()) * pixel_delta_u) + ((j + offset.y()) * pixel_delta_v);
+        color pixel_center = pixel00_loc + (i * pixel_delta_u) + (j * pixel_delta_v);
 
         vec3 ray_origin = center;
-        vec3 ray_direction = pixel_sample - ray_origin;
+        vec3 ray_direction = pixel_center - ray_origin;
 
         return ray(ray_origin, ray_direction);
     }
