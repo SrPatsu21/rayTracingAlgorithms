@@ -69,20 +69,31 @@ private:
             double y = 0.5 * (pos.y() + 1.0);
             double z = 0.5 * (pos.z() + 1.0);
 
-            // double x = pos.x();
-            // double y = pos.y();
-            // double z = pos.z();
+            auto remap = [](double v) {
+                return (v - 0.3) / 0.4;
+            };
 
+            x = remap(x);
+            y = remap(y);
+            z = remap(z);
+
+            // return color(
+            //     x*y,
+            //     (1-x),
+            //     x*(1-y)
+            // );
             return color(
-                x*(1-y),
                 y,
-                (1-x)
+                (1-x),
+                x
             );
         }
 
         vec3 unit_direction = unit_vector(r.direction());
         auto a = 0.5*(unit_direction.y() + 1.0);
-        return (1.0-a)*color(1.0, 1.0, 1.0) + a*color(0.5, 0.7, 1.0);
+        // return (1.0-a)*color(1.0, 1.0, 1.0) + a*color(0.5, 0.7, 1.0);
+        return color(0.0, 0.0, 0.0);
+
     }
 
     ray get_ray(int i, int j) const {
