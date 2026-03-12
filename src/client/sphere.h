@@ -5,8 +5,14 @@
 #include "rtweekend.h"
 
 class sphere : public hittable {
-  public:
-    sphere(const point3& center, double radius) : center(center), radius(std::fmax(0,radius)) {}
+private:
+    point3 center;
+    double radius;
+    shared_ptr<material> mat;
+
+public:
+    sphere(const point3& center, double radius, shared_ptr<material> mat)
+    : center(center), radius(std::fmax(0,radius)), mat(mat) {}
 
     bool hit(const ray& r, interval ray_t, hit_record& rec) const override {
         vec3 oc = center - r.origin();
@@ -32,14 +38,12 @@ class sphere : public hittable {
         rec.p = r.at(rec.t);
         rec.normal = (rec.p - center) / radius;
         vec3 outward_normal = (rec.p - center) / radius;
+        rec.mat = mat;
         rec.set_face_normal(r, outward_normal);
 
         return true;
     }
 
-  private:
-    point3 center;
-    double radius;
 };
 
 #endif
