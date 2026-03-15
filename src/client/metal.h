@@ -186,15 +186,17 @@ private:
 
 /**
  * @class dielectric
- * @brief Transparent material that refracts light (e.g., glass, water).
+ * @brief Transparent material that transmits light through refraction (e.g., glass, water).
  *
- * Dielectric materials transmit light according to Snell's Law.
+ * Dielectric materials bend light when it crosses the boundary between
+ * two media with different refractive indices. The behavior is governed
+ * by Snell's Law.
  *
  * ------------------------------------------------------------
  * Snell's Law
  * ------------------------------------------------------------
  *
- * Refraction follows:
+ * Refraction follows the relationship:
  *
  *      n₁ sin(θ₁) = n₂ sin(θ₂)
  *
@@ -202,39 +204,80 @@ private:
  *
  *      n₁ = refractive index of incident medium
  *      n₂ = refractive index of transmitted medium
+ *      θ₁ = incident angle
+ *      θ₂ = refracted angle
+ *
+ * In the implementation, we use the ratio:
+ *
+ *      η = n₁ / n₂
+ *
+ *
+ * ------------------------------------------------------------
+ * Computing the incident angle
+ * ------------------------------------------------------------
+ *
+ * The cosine of the incident angle is obtained using the dot product:
+ *
+ *      cosθ = min( dot(-uv, N), 1 )
+ *
+ * where:
+ *
+ *      uv = normalized incoming direction
+ *      N  = surface normal
+ *
+ * The sine is derived using the identity:
+ *
+ *      sin²θ + cos²θ = 1
+ *
+ * so
+ *
+ *      sinθ = √(1 − cos²θ)
  *
  *
  * ------------------------------------------------------------
  * Refraction vector
  * ------------------------------------------------------------
  *
- * The refracted ray is computed by decomposing the ray into
- * perpendicular and parallel components:
+ * The refracted ray is decomposed into two components:
+ *
+ * Perpendicular component:
  *
  *      r⊥ = η (uv + cosθ N)
  *
+ * Parallel component:
+ *
  *      r∥ = -√(1 - |r⊥|²) N
  *
- * Final direction:
+ * Final refracted ray:
  *
  *      r = r⊥ + r∥
  *
- * where:
  *
- *      η = n₁ / n₂
- *      uv = unit incoming direction
- *      N  = surface normal
+ * ------------------------------------------------------------
+ * Total Internal Reflection
+ * ------------------------------------------------------------
+ *
+ * Refraction becomes impossible when Snell's law cannot be satisfied.
+ * This occurs when:
+ *
+ *      η sinθ > 1
+ *
+ * In this case, the ray undergoes total internal reflection instead of
+ * refraction.
+ *
+ * The reflected direction follows the mirror reflection equation:
+ *
+ *      R = V − 2(V · N)N
  *
  *
  * ------------------------------------------------------------
  * Refractive index
  * ------------------------------------------------------------
  *
- * The refractive index determines how much light bends:
+ * The refractive index determines how much light bends when entering
+ * the material.
  *
- *      η = n₁ / n₂
- *
- * Examples:
+ * Typical values:
  *
  *      air   ≈ 1.0003
  *      water ≈ 1.33
@@ -245,11 +288,11 @@ private:
  * Attenuation
  * ------------------------------------------------------------
  *
- * Ideal dielectrics do not absorb light:
+ * Ideal dielectrics do not absorb light, so the ray keeps its energy:
  *
- *      attenuation = (1,1,1)
+ *      attenuation = (1, 1, 1)
  *
- * meaning the ray keeps its full energy.
+ * meaning the color of the ray is unchanged.
  */
 class dielectric : public material {
 public:
