@@ -3,7 +3,6 @@
 #include "hittable.h"
 #include "hittable_list.h"
 #include "sphere.h"
-#include "triangle.h"
 #include "camera.h"
 
 int main() {
@@ -20,24 +19,6 @@ int main() {
     world.add(make_shared<sphere>(point3( 0.0,    0.0, -1.2),   0.5, material_center));
     world.add(make_shared<sphere>(point3(-1.0,    0.0, -1.0),   0.5, material_left));
     world.add(make_shared<sphere>(point3( 1.0,    0.0, -1.0),   0.5, material_right));
-    // world.add(make_shared<triangle>(
-    //     point3(-1, 1, -3),
-    //     point3(0, 2, -3),
-    //     point3(1, 1, -3)
-    // ));
-
-    // world.add(make_shared<triangle>(
-    //         point3(-1, -1, -3),
-    //         point3(1, -1, -3),
-    //         point3(1, 1, -3)
-    //     )
-    // );
-    // world.add(make_shared<triangle>(
-    //         point3(-1, -1, -3),
-    //         point3(1, 1, -3),
-    //         point3(-1, 1, -3)
-    //     )
-    // );
 
     camera cam;
 

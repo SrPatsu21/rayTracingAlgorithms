@@ -55,6 +55,8 @@ public:
     bool near_zero() const {
         // Return true if the vector is close to zero in all dimensions.
         auto s = 1e-8;
+        // absolute float: fabs(double) fabsf(float) fabsl(long double)
+        // fabs is tradition carried into early C++
         return (std::fabs(e[0]) < s) && (std::fabs(e[1]) < s) && (std::fabs(e[2]) < s);
     }
 };
@@ -93,22 +95,77 @@ inline vec3 operator/(const vec3& v, double t) {
     return (1/t) * v;
 }
 
+// Dot product between two vectors
+// Formula:
+//
+// u · v = uₓvₓ + uᵧvᵧ + u_zv_z
+//
+// Geometric meaning:
+// u · v = |u||v|cos(θ)
+// where θ is the angle between the vectors.
+// Used to measure alignment between two directions.
 inline double dot(const vec3& u, const vec3& v) {
     return u.e[0] * v.e[0]
          + u.e[1] * v.e[1]
          + u.e[2] * v.e[2];
 }
 
+/**
+ * Cross product between two vectors
+ *  Formula:
+ *
+ * u × v = (uᵧv𝔷 − u𝔷vᵧ, u𝔷vₓ − uₓv𝔷, uₓvᵧ − uᵧvₓ)
+ *
+ * Geometric meaning:
+ * Result is a vector perpendicular to both u and v.
+ *
+ * Magnitude:
+ *
+ * |u × v| = |u||v| sin(θ)
+ *
+ * Used heavily for surface normals and orientation.
+*/
 inline vec3 cross(const vec3& u, const vec3& v) {
     return vec3(u.e[1] * v.e[2] - u.e[2] * v.e[1],
                 u.e[2] * v.e[0] - u.e[0] * v.e[2],
                 u.e[0] * v.e[1] - u.e[1] * v.e[0]);
 }
 
+/**
+ * Normalize a vector (convert to unit length)
+ *
+ * Formula:
+ *
+ * v̂ = v / |v|
+ *
+ * where
+ *
+ * |v| = √(v · v)
+ *
+ * Result:
+ * |v̂| = 1
+ *
+ */
 inline vec3 unit_vector(const vec3& v) {
     return v / v.length();
 }
 
+/**
+ * Generate a random vector uniformly distributed on the unit sphere.
+ *
+ * Method:
+ * 1. Random point inside cube [-1,1]³
+ * 2. Reject points outside the unit sphere
+ * 3. Normalize the vector
+ *
+ * Condition:
+ *
+ * 0 < |p|² ≤ 1
+ *
+ * Returned vector:
+ *
+ * p̂ = p / |p|
+ */
 inline vec3 random_unit_vector() {
     while (true) {
         auto p = vec3::random(-1,1);
@@ -118,6 +175,26 @@ inline vec3 random_unit_vector() {
     }
 }
 
+/**
+ * Refraction using Snell's Law.
+ *
+ * Snell's law:
+ *
+ * n₁ sin(θ₁) = n₂ sin(θ₂)
+ *
+ * The refracted ray is decomposed into two components:
+ *
+ * r_out_perp     = η (uv + cosθ n)
+ * r_out_parallel = -√(1 - |r_out_perp|²) n
+ *
+ * where:
+ *
+ * η = etai_over_etat = n₁ / n₂
+ *
+ * Final refracted vector:
+ *
+ * r = r_out_perp + r_out_parallel
+ */
 inline vec3 refract(const vec3& uv, const vec3& n, double etai_over_etat) {
     auto cos_theta = std::fmin(dot(-uv, n), 1.0);
     vec3 r_out_perp = etai_over_etat * (uv + cos_theta*n);
@@ -125,6 +202,19 @@ inline vec3 refract(const vec3& uv, const vec3& n, double etai_over_etat) {
     return r_out_perp + r_out_parallel;
 }
 
+/**
+ * Generate a random direction on the hemisphere defined by a normal.
+ *
+ * Method:
+ * 1. Pick random direction on unit sphere
+ * 2. Keep it if it points in the same hemisphere
+ *
+ * Condition:
+ *
+ * dot(v, normal) > 0
+ *
+ * If not, flip the vector.
+ */
 inline vec3 random_on_hemisphere(const vec3& normal) {
     vec3 on_unit_sphere = random_unit_vector();
     if (dot(on_unit_sphere, normal) > 0.0) // In the same hemisphere as the normal
@@ -133,6 +223,16 @@ inline vec3 random_on_hemisphere(const vec3& normal) {
         return -on_unit_sphere;
 }
 
+/**
+ * Reflection of vector v around normal n.
+ *
+ * Formula:
+ *
+ * r = v − 2(v · n)n
+ *
+ * Derived from projecting v onto the normal
+ * and subtracting twice that component.
+ */
 inline vec3 reflect(const vec3& v, const vec3& n) {
     return v - 2*dot(v,n)*n;
 }

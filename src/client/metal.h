@@ -3,6 +3,40 @@
 
 #include "hittable.h"
 
+/**
+ * @class material
+ * @brief Abstract base class representing how light interacts with a surface.
+ *
+ * Materials define the scattering behavior of incoming rays when they hit
+ * a surface. The scatter() function determines whether a ray is absorbed,
+ * reflected, refracted, or diffused.
+ *
+ * ------------------------------------------------------------
+ * Ray interaction model
+ * ------------------------------------------------------------
+ *
+ * A ray hitting a surface produces a new ray according to the material's
+ * physical model:
+ *
+ *      r_scattered = f(r_in, surface_properties)
+ *
+ * where:
+ *
+ *      r_in = incoming ray
+ *      r_scattered = outgoing ray
+ *
+ * The material also determines the energy attenuation of the ray:
+ *
+ *      L_out = attenuation ⊙ L_in
+ *
+ * where:
+ *
+ *      attenuation = surface color or reflectance
+ *      ⊙ = component-wise multiplication
+ *
+ * Derived material classes implement specific physical behaviors
+ * such as diffuse scattering, reflection, or refraction.
+ */
 class material {
 public:
     virtual ~material() = default;
@@ -14,6 +48,52 @@ public:
     }
 };
 
+/**
+ * @class lambertian
+ * @brief Diffuse material following Lambert's Cosine Law.
+ *
+ * Lambertian surfaces scatter light uniformly in all directions
+ * over the hemisphere above the surface.
+ *
+ * ------------------------------------------------------------
+ * Lambert's Cosine Law
+ * ------------------------------------------------------------
+ *
+ * The reflected intensity depends on the angle between the surface
+ * normal and the outgoing direction:
+ *
+ *      I ∝ cos(θ)
+ *
+ * where:
+ *
+ *      θ = angle between outgoing ray and surface normal
+ *
+ *
+ * ------------------------------------------------------------
+ * Scatter direction
+ * ------------------------------------------------------------
+ *
+ * The scattered ray direction is approximated by:
+ *
+ *      scatter_direction = N + random_unit_vector()
+ *
+ * where:
+ *
+ *      N = surface normal
+ *
+ * This generates a random direction in the hemisphere around the normal.
+ *
+ *
+ * ------------------------------------------------------------
+ * Attenuation
+ * ------------------------------------------------------------
+ *
+ * The reflected light is scaled by the surface albedo:
+ *
+ *      L_out = albedo ⊙ L_in
+ *
+ * where albedo represents the intrinsic color of the material.
+ */
 class lambertian : public material {
 public:
     lambertian(const color& albedo) : albedo(albedo) {}
@@ -35,6 +115,57 @@ private:
     color albedo;
 };
 
+/**
+ * @class metal
+ * @brief Reflective material that models metallic surfaces.
+ *
+ * Metallic materials reflect incoming rays according to the
+ * law of reflection, with optional surface roughness ("fuzz").
+ *
+ * ------------------------------------------------------------
+ * Reflection equation
+ * ------------------------------------------------------------
+ *
+ * The reflected vector is computed as:
+ *
+ *      R = V − 2(V · N)N
+ *
+ * where:
+ *
+ *      V = incoming ray direction
+ *      N = surface normal
+ *      R = reflected direction
+ *
+ *
+ * ------------------------------------------------------------
+ * Surface roughness (fuzz)
+ * ------------------------------------------------------------
+ *
+ * Imperfect reflection is simulated by perturbing the reflection
+ * direction using a random vector:
+ *
+ *      R_fuzzy = normalize(R) + fuzz * random_unit_vector()
+ *
+ * where:
+ *
+ *      fuzz ∈ [0,1]
+ *
+ * Interpretation:
+ *
+ *      fuzz = 0 → perfect mirror
+ *      fuzz = 1 → very rough metal
+ *
+ *
+ * ------------------------------------------------------------
+ * Valid reflection condition
+ * ------------------------------------------------------------
+ *
+ * The reflected ray must leave the surface:
+ *
+ *      dot(R, N) > 0
+ *
+ * Otherwise the ray is absorbed.
+ */
 class metal : public material {
 public:
     metal(const color& albedo, double fuzz) : albedo(albedo), fuzz(fuzz < 1 ? fuzz : 1) {}
@@ -53,6 +184,73 @@ private:
     double fuzz;
 };
 
+/**
+ * @class dielectric
+ * @brief Transparent material that refracts light (e.g., glass, water).
+ *
+ * Dielectric materials transmit light according to Snell's Law.
+ *
+ * ------------------------------------------------------------
+ * Snell's Law
+ * ------------------------------------------------------------
+ *
+ * Refraction follows:
+ *
+ *      n₁ sin(θ₁) = n₂ sin(θ₂)
+ *
+ * where:
+ *
+ *      n₁ = refractive index of incident medium
+ *      n₂ = refractive index of transmitted medium
+ *
+ *
+ * ------------------------------------------------------------
+ * Refraction vector
+ * ------------------------------------------------------------
+ *
+ * The refracted ray is computed by decomposing the ray into
+ * perpendicular and parallel components:
+ *
+ *      r⊥ = η (uv + cosθ N)
+ *
+ *      r∥ = -√(1 - |r⊥|²) N
+ *
+ * Final direction:
+ *
+ *      r = r⊥ + r∥
+ *
+ * where:
+ *
+ *      η = n₁ / n₂
+ *      uv = unit incoming direction
+ *      N  = surface normal
+ *
+ *
+ * ------------------------------------------------------------
+ * Refractive index
+ * ------------------------------------------------------------
+ *
+ * The refractive index determines how much light bends:
+ *
+ *      η = n₁ / n₂
+ *
+ * Examples:
+ *
+ *      air   ≈ 1.0003
+ *      water ≈ 1.33
+ *      glass ≈ 1.5
+ *
+ *
+ * ------------------------------------------------------------
+ * Attenuation
+ * ------------------------------------------------------------
+ *
+ * Ideal dielectrics do not absorb light:
+ *
+ *      attenuation = (1,1,1)
+ *
+ * meaning the ray keeps its full energy.
+ */
 class dielectric : public material {
 public:
     dielectric(double refraction_index) : refraction_index(refraction_index) {}
