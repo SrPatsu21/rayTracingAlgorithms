@@ -10,6 +10,15 @@ int main() {
     // World
     hittable_list world;
 
+    // auto R = std::cos(pi/4);
+
+    // auto material_left  = make_shared<lambertian>(color(0,0,1));
+    // auto material_right = make_shared<lambertian>(color(1,0,0));
+
+    // world.add(make_shared<sphere>(point3(-R, 0, -1), R, material_left));
+    // world.add(make_shared<sphere>(point3( R, 0, -1), R, material_right));
+
+
     auto material_ground = make_shared<lambertian>(color(0.8, 0.8, 0.0));
     auto material_center = make_shared<lambertian>(color(0.1, 0.2, 0.5));
     auto material_left = make_shared<dielectric>(1.50);
@@ -28,6 +37,8 @@ int main() {
     cam.image_width = 960; // 1920;
     cam.samples_per_pixel = 16;
     cam.max_depth = 10;
+
+    cam.vfov = 120;
 
     cam.render(world);
 }
