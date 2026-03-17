@@ -151,6 +151,66 @@ inline vec3 unit_vector(const vec3& v) {
 }
 
 /**
+ * @brief Generates a random point inside the unit disk on the XY plane.
+ *
+ * The unit disk is defined as all points (x, y) such that:
+ *
+ *      x² + y² < 1
+ *
+ * This function uses rejection sampling:
+ *
+ * 1. Generate a random point in the square:
+ *
+ *      x ∈ [-1, 1],  y ∈ [-1, 1]
+ *
+ * 2. Accept the point only if it lies inside the unit circle:
+ *
+ *      x² + y² < 1
+ *
+ * 3. Otherwise, discard it and try again.
+ *
+ *
+ * ------------------------------------------------------------
+ * Mathematical interpretation
+ * ------------------------------------------------------------
+ *
+ * The function ensures:
+ *
+ *      |p|² = x² + y² < 1
+ *
+ * which means the point lies strictly inside the unit disk.
+ *
+ *
+ * ------------------------------------------------------------
+ * Why z = 0?
+ * ------------------------------------------------------------
+ *
+ * The disk lies in the XY plane:
+ *
+ *      p = (x, y, 0)
+ *
+ * This is useful for:
+ *  - depth of field (camera lens simulation)
+ *  - sampling circular areas
+ *
+ *
+ * ------------------------------------------------------------
+ * Uniform distribution
+ * ------------------------------------------------------------
+ *
+ * Rejection sampling produces a uniform distribution over the disk,
+ * meaning every point inside the circle has equal probability.
+ *
+ */
+inline vec3 random_in_unit_disk() {
+    while (true) {
+        auto p = vec3(random_double(-1,1), random_double(-1,1), 0);
+        if (p.length_squared() < 1)
+        return p;
+    }
+}
+
+/**
  * Generate a random vector uniformly distributed on the unit sphere.
  *
  * Method:
