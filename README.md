@@ -16,6 +16,8 @@
      - Reflexão, refração, sombras
      - Ainda determinístico
      - Base física (rendering equation)
+     - Fonte:
+        - <https://docs.lib.purdue.edu/cgi/viewcontent.cgi?article=1024&context=techmasters>
 
    - **Path Tracing (1986)**
      - James Kajiya
@@ -82,6 +84,9 @@
 
    - **Differentiable Ray Tracing**
      - Permite otimização (usado em ML)
+
+- **Fontes:**
+   - <https://ceur-ws.org/Vol-3150/short3.pdf>
 
 ## Estruturas de aceleração:
 1. **Clássicas**
