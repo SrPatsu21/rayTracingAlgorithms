@@ -6,6 +6,9 @@
    - **Ray Casting (1968)**
      - Arthur Appel
      - Apenas visibilidade (sem iluminação global)
+     - Fontes:
+        - <https://www.adobe.com/br/products/substance3d/discover/what-is-ray-casting.html>
+        - <https://lodev.org/cgtutor/raycasting.html>
 
 2. **Ray tracing clássico**
    - **Whitted Ray Tracing (1980)**
