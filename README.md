@@ -9,6 +9,8 @@
      - Fontes:
         - <https://www.adobe.com/br/products/substance3d/discover/what-is-ray-casting.html>
         - <https://lodev.org/cgtutor/raycasting.html>
+        - <https://www.sciencedirect.com/science/article/pii/S0168583X0600245X?ref=pdf_download&fr=RR-2&rr=9dec841bcc000357>
+        - <https://dl.acm.org/doi/pdf/10.1145/311535.311563>
 
 2. **Ray tracing clássico**
    - **Whitted Ray Tracing (1980)**
