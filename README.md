@@ -120,3 +120,19 @@
      - Melhor uso de SIMD
    - **Compressed BVH**
      - Reduz memória
+
+## Técnicas de Amostragem
+
+   - **Importance Sampling**
+   - **Multiple Importance Sampling (MIS)**
+   - **Stratified Sampling**
+   - **Blue Noise Sampling**
+
+## O que comparar
+
+   - **Tempo de construção**
+   - **Tempo de travessia**
+   - **Uso de memória**
+   - **throughput (rays/sec)**
+   - **escalabilidade**
+   - **eficiência energética**
