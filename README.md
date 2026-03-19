@@ -79,3 +79,44 @@
 
    - **Differentiable Ray Tracing**
      - Permite otimização (usado em ML)
+
+## Estruturas de aceleração:
+1. **Clássicas**
+
+   - **BVH (Bounding Volume Hierarchy)**
+     - Mais usado hoje
+     - Variações:
+       - SAH BVH
+       - LBVH (GPU)
+       - HLBVH
+   - **KD-Tree**
+     - Muito eficiente, mas caro de construir
+   - **Uniform Grid**
+     - Simples
+     - Ruim em cenas não uniformes
+   - **Octree**
+     - Divisão recursiva do espaço
+
+---
+
+2. **Intermediárias**
+
+   - **BSP Tree (Binary Space Partitioning)**
+     - Generalização do KD-tree
+   - **Bounding Interval Hierarchy (BIH)**
+     - Mais simples que BVH
+   - **Grid Hierárquico**
+     - Combinação de grids
+
+---
+
+3. **Modernas / GPU**
+
+   - **Linear BVH (LBVH)**
+     - Construção rápida em GPU
+   - **Hierarchical LBVH (HLBVH)**
+     - Combina qualidade + velocidade
+   - **Wide BVH (BVH4, BVH8)**
+     - Melhor uso de SIMD
+   - **Compressed BVH**
+     - Reduz memória
