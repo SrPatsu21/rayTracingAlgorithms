@@ -97,8 +97,6 @@
    - **Octree**
      - Divisão recursiva do espaço
 
----
-
 2. **Intermediárias**
 
    - **BSP Tree (Binary Space Partitioning)**
@@ -107,8 +105,6 @@
      - Mais simples que BVH
    - **Grid Hierárquico**
      - Combinação de grids
-
----
 
 3. **Modernas / GPU**
 
@@ -136,3 +132,8 @@
    - **throughput (rays/sec)**
    - **escalabilidade**
    - **eficiência energética**
+
+## Técnicas de redução de ruído
+   - **Denoising clássico**
+   - **Spatiotemporal filtering**
+   - **AI denoising**
