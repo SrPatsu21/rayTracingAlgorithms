@@ -6,6 +6,11 @@
    - **Ray Casting (1968)**
      - Arthur Appel
      - Apenas visibilidade (sem iluminação global)
+     - Fontes:
+        - <https://www.adobe.com/br/products/substance3d/discover/what-is-ray-casting.html>
+        - <https://lodev.org/cgtutor/raycasting.html>
+        - <https://www.sciencedirect.com/science/article/pii/S0168583X0600245X?ref=pdf_download&fr=RR-2&rr=9dec841bcc000357>
+        - <https://dl.acm.org/doi/pdf/10.1145/311535.311563>
 
 2. **Ray tracing clássico**
    - **Whitted Ray Tracing (1980)**
@@ -13,6 +18,8 @@
      - Reflexão, refração, sombras
      - Ainda determinístico
      - Base física (rendering equation)
+     - Fonte:
+        - <https://docs.lib.purdue.edu/cgi/viewcontent.cgi?article=1024&context=techmasters>
 
    - **Path Tracing (1986)**
      - James Kajiya
@@ -79,6 +86,9 @@
 
    - **Differentiable Ray Tracing**
      - Permite otimização (usado em ML)
+
+- **Fontes:**
+   - <https://ceur-ws.org/Vol-3150/short3.pdf>
 
 ## Estruturas de aceleração:
 1. **Clássicas**
