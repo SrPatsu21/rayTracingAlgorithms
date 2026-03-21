@@ -6,11 +6,18 @@
    - **Ray Casting (1968)**
      - Arthur Appel
      - Apenas visibilidade (sem iluminação global)
+     - Ray casting algorithm that used for rendering was first introduced by Arthur Appel in 1968. Ray casting renders the scene by emitting a ray from the observation point to each pixel and finding the closest object that blocks the light path in the world scene. Only two rays were involved in ray casting. The first emitted by the eye to find the intersection point, the other was sent from the intersection point to the light, to see if the ray itself is in the shadow.
+     - <img width="1148" height="615" alt="img/Intuition_of_Ray_casting" src="https://github.com/user-attachments/assets/6b895d14-2785-420a-b306-9f33f45f492e" />
+
      - Fontes:
-        - <https://www.adobe.com/br/products/substance3d/discover/what-is-ray-casting.html>
-        - <https://lodev.org/cgtutor/raycasting.html>
-        - <https://www.sciencedirect.com/science/article/pii/S0168583X0600245X?ref=pdf_download&fr=RR-2&rr=9dec841bcc000357>
-        - <https://dl.acm.org/doi/pdf/10.1145/311535.311563>
+        - <https://ceur-ws.org/Vol-3150/short3.pdf> 
+           @inproceedings{wang2022development,
+              title={The Development of Ray Tracing and Its Future.},
+              author={Wang, Zijin},
+              booktitle={CONF-SPML},
+              pages={19--28},
+              year={2022}
+            }
 
 2. **Ray tracing clássico**
    - **Whitted Ray Tracing (1980)**
