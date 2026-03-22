@@ -8,6 +8,8 @@
      - Apenas visibilidade (sem iluminação global)
      - Ray casting algorithm that used for rendering was first introduced by Arthur Appel in 1968. Ray casting renders the scene by emitting a ray from the observation point to each pixel and finding the closest object that blocks the light path in the world scene. Only two rays were involved in ray casting. The first emitted by the eye to find the intersection point, the other was sent from the intersection point to the light, to see if the ray itself is in the shadow.
      - <img width="1148" height="615" alt="img/Intuition_of_Ray_casting" src="https://github.com/user-attachments/assets/6b895d14-2785-420a-b306-9f33f45f492e" />
+     - The facets are oriented using the right-hand rule: the vertices are listed in counter-clockwise order when looking at the object from the outside. In other words, for a given facet ABC, the normal vector n = AB · AC is out-ward. We use the notation AB to denote the vector from A to B.
+     - 
 
      - Fontes:
         - <https://ceur-ws.org/Vol-3150/short3.pdf> 
@@ -18,6 +20,18 @@
               pages={19--28},
               year={2022}
             }
+        - <https://www.sciencedirect.com/science/article/pii/S0168583X0600245X?casa_token=wnG_kDe1ByAAAAAA:ZrzHlauIb-ZUv24h2AVP4oeqgg3Fcd6PJeNWSuYH42z3sCA4Ftn_GlYQ-O5y17LykjMhxXauXiLAjg>
+           @article{freud2006fast,
+              title={Fast and robust ray casting algorithms for virtual X-ray imaging},
+              author={Freud, Nicolas and Duvauchelle, Philippe and L{\'e}tang, Jean-Michel and Babot, Daniel},
+              journal={Nuclear Instruments and Methods in Physics Research Section B: Beam Interactions with Materials and Atoms},
+              volume={248},
+              number={1},
+              pages={175--180},
+              year={2006},
+              publisher={Elsevier}
+            }
+
 
 2. **Ray tracing clássico**
    - **Whitted Ray Tracing (1980)**
