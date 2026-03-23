@@ -9,7 +9,6 @@
      - Ray casting algorithm that used for rendering was first introduced by Arthur Appel in 1968. Ray casting renders the scene by emitting a ray from the observation point to each pixel and finding the closest object that blocks the light path in the world scene. Only two rays were involved in ray casting. The first emitted by the eye to find the intersection point, the other was sent from the intersection point to the light, to see if the ray itself is in the shadow.
      - <img width="1148" height="615" alt="img/Intuition_of_Ray_casting" src="https://github.com/user-attachments/assets/6b895d14-2785-420a-b306-9f33f45f492e" />
      - The facets are oriented using the right-hand rule: the vertices are listed in counter-clockwise order when looking at the object from the outside. In other words, for a given facet ABC, the normal vector n = AB · AC is out-ward. We use the notation AB to denote the vector from A to B.
-     - 
 
      - Fontes:
         - <https://ceur-ws.org/Vol-3150/short3.pdf> 
@@ -32,13 +31,24 @@
               publisher={Elsevier}
             }
 
-
 2. **Ray tracing clássico**
    - **Whitted Ray Tracing (1980)**
      - Turner Whitted
      - Reflexão, refração, sombras
      - Ainda determinístico
      - Base física (rendering equation)
+     - Beyond primary visibility, Whitted ray tracing requires secondary rays for point-light shadows, reflections, and refractions. According to "E. Mansson, J. Munkberg, and T. Akenine-Moller. Deep coherent ray tracing. IEEE Symp. on Interactive Ray Tracing, 2007", ray coherence degrades for these secondary effects, and we expect a corresponding drop in performance for large ray packet algorithms.
+    
+      - <http://www.billmark.com/papers/whitted.pdf>
+         @inproceedings{overbeck2008large,
+            title={Large ray packets for real-time whitted ray tracing},
+            author={Overbeck, Ryan and Ramamoorthi, Ravi and Mark, William R},
+            booktitle={2008 IEEE Symposium on Interactive Ray Tracing},
+            pages={41--48},
+            year={2008},
+            organization={IEEE}
+         }
+
      - Fonte:
         - <https://docs.lib.purdue.edu/cgi/viewcontent.cgi?article=1024&context=techmasters>
 
