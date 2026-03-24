@@ -37,7 +37,9 @@
      - Reflexão, refração, sombras
      - Ainda determinístico
      - Base física (rendering equation)
+     - Pioneered by the works of Whitted and Appel, ray tracing has become a standard format for image rendering. Ray tracing is a very accurate mathematical calculation of light and color, but is a very slow process
      - Beyond primary visibility, Whitted ray tracing requires secondary rays for point-light shadows, reflections, and refractions. According to "E. Mansson, J. Munkberg, and T. Akenine-Moller. Deep coherent ray tracing. IEEE Symp. on Interactive Ray Tracing, 2007", ray coherence degrades for these secondary effects, and we expect a corresponding drop in performance for large ray packet algorithms.
+     - Specular reflections is one area where ray-traced images typically differ from images generated with rasterization. These effects depend on secondary rays, as opposed to the primary rays (rays originating from the viewpoint of the camera). Secondary rays include reflected rays (after one or several reflections), refracted rays and shadow rays. While primary rays are highly coherent, making it easier to optimize the computations, e.g. using caching schemes together with the scene hierarchies, secondary rays exhibit much less coherence: two secondary rays generated from neighbouring points can intersect with objects that are far away in the scene. As a consequence, efficient computation of secondary rays is a harder problem than for primary rays.
     
       - <http://www.billmark.com/papers/whitted.pdf>
          @inproceedings{overbeck2008large,
@@ -51,6 +53,25 @@
 
      - Fonte:
         - <https://docs.lib.purdue.edu/cgi/viewcontent.cgi?article=1024&context=techmasters>
+        - <https://inria.hal.science/hal-00171587/document>
+           @inproceedings{roger2007whitted,
+              title={Whitted ray-tracing for dynamic scenes using a ray-space hierarchy on the GPU},
+              author={Roger, David and Assarsson, Ulf and Holzschuch, Nicolas},
+              booktitle={Symposium on Rendering, Rendering Techniques 2007},
+              pages={99--110},
+              year={2007},
+              organization={Eurographics Association}
+            }
+
+        - <http://www.billmark.com/papers/whitted.pdf>
+         @inproceedings{overbeck2008large,
+            title={Large ray packets for real-time whitted ray tracing},
+            author={Overbeck, Ryan and Ramamoorthi, Ravi and Mark, William R},
+            booktitle={2008 IEEE Symposium on Interactive Ray Tracing},
+            pages={41--48},
+            year={2008},
+            organization={IEEE}
+         }
 
    - **Path Tracing (1986)**
      - James Kajiya
