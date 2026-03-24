@@ -95,6 +95,19 @@
    - **Bidirectional Path Tracing (BDPT)**
      - Conecta câmera ↔ luz
      - Melhor em cenas difíceis
+     - Most current global illumination algorithms ignore the influence of the medium through which the light travels. In these illumination simulations, light is only emitted and re-flected at surfaces; the absorption, scattering and emission of light as a result of smoke, dust, fog or flames are neglected.
+     - Depending on the applications they handle homogeneous or non-homogeneous and isotropic or anisotropic media
+     - Fontes:
+        - <http://luthuli.cs.uiuc.edu/~daf/courses/rendering/papers/lafortune96rendering.pdf>
+        @inproceedings{lafortune1996rendering,
+           title={Rendering participating media with bidirectional path tracing},
+           author={Lafortune, Eric P and Willems, Yves D},
+           booktitle={Eurographics Workshop on Rendering Techniques},
+           pages={91--100},
+           year={1996},
+           organization={Springer}
+         }
+
 
    - **Metropolis Light Transport (MLT)**
      - Eric Veach
