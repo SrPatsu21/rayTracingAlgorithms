@@ -79,6 +79,17 @@
      - James Kajiya
      - Introduz Monte Carlo
      - Simulação física completa da luz
+     - Kajiya presented the rendering equation and intro duced path tracing as a Monte Carlo algorithm to solve it The idea is to sample the ux through the pixels gathering light by following all light paths back to the light sources As such it is entirely view dep endent Various other algorithms are based on the same principle. Monte Carlo techniques are capable of handling the most general class of lighting effects but are generally slow to converge
+     - Global illumination algorithms seek to estimate the value of each image pixel defined as a complex integral over the space of light paths, relying on large numbers of Monte-Carlo samples to avoid noise. Recent advances
+    
+     - Fonte
+        - <https://masters.donntu.ru/2013/fknt/kalamitra/library/Bidirectional%20Path%20Tracing%201990.pdf>
+           @article{lafortune1993bi,
+              title={Bi-directional path tracing},
+              author={Lafortune, Eric P and Willems, Yves D},
+              year={1993}
+            }
+        - 
 
 3. **Expansões Monte Carlo (anos 90**
    - **Bidirectional Path Tracing (BDPT)**
