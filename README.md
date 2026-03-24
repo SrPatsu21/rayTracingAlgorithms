@@ -40,6 +40,8 @@
      - Pioneered by the works of Whitted and Appel, ray tracing has become a standard format for image rendering. Ray tracing is a very accurate mathematical calculation of light and color, but is a very slow process
      - Beyond primary visibility, Whitted ray tracing requires secondary rays for point-light shadows, reflections, and refractions. According to "E. Mansson, J. Munkberg, and T. Akenine-Moller. Deep coherent ray tracing. IEEE Symp. on Interactive Ray Tracing, 2007", ray coherence degrades for these secondary effects, and we expect a corresponding drop in performance for large ray packet algorithms.
      - Specular reflections is one area where ray-traced images typically differ from images generated with rasterization. These effects depend on secondary rays, as opposed to the primary rays (rays originating from the viewpoint of the camera). Secondary rays include reflected rays (after one or several reflections), refracted rays and shadow rays. While primary rays are highly coherent, making it easier to optimize the computations, e.g. using caching schemes together with the scene hierarchies, secondary rays exhibit much less coherence: two secondary rays generated from neighbouring points can intersect with objects that are far away in the scene. As a consequence, efficient computation of secondary rays is a harder problem than for primary rays.
+     - <img width="1070" height="609" alt="Illustration of rays, vectors and angles required in ray tracing" src="https://github.com/user-attachments/assets/6747cf25-97f4-40ca-8507-c31126736bdf" />
+
     
       - <http://www.billmark.com/papers/whitted.pdf>
          @inproceedings{overbeck2008large,
