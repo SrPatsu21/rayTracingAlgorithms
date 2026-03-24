@@ -97,6 +97,9 @@
      - Melhor em cenas difíceis
      - Most current global illumination algorithms ignore the influence of the medium through which the light travels. In these illumination simulations, light is only emitted and re-flected at surfaces; the absorption, scattering and emission of light as a result of smoke, dust, fog or flames are neglected.
      - Depending on the applications they handle homogeneous or non-homogeneous and isotropic or anisotropic media
+     - Bidirectional path tracing combines the ideas of path tracing and light tracing by creating random walks, starting not only from the eye point, but also from the light sources. Eye paths start from the eye point, through the pixel that is being computed, as in classical path tracing. Light paths start from a sampled point on a light source in a sampled direction. Rays can be scattered or absorbed in the medium, as well as being reflected or absorbed at the surfaces of the scene.
+     - After tracing a pair of random walks, the intersection points on the respective paths are connected by means of shadow rays. Each shadow ray that is not intercepted by an object in the scene contributes to the estimated flux or average radiance through the pixel.
+     - <img width="802" height="568" alt="Bidirectional Path Tracing" src="https://github.com/user-attachments/assets/8008f47b-02af-4703-af1d-99eac6a44ab7" />
      - Fontes:
         - <http://luthuli.cs.uiuc.edu/~daf/courses/rendering/papers/lafortune96rendering.pdf>
         @inproceedings{lafortune1996rendering,
