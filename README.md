@@ -142,15 +142,22 @@
       - Dois passos:
           1. Emissão de fótons
           2. Reconstrução da iluminação
-      -  a simple and robust progressive global illumination algorithm based on photon mapping. Progressive photon mapping is a multi-pass algorithm where the first pass is ray tracing followed by any number of photon tracing passes. Each photon tracing pass results in an increasingly accurate global illumination solution that can be visualized in order to provide progressive feedback. Progressive photon mapping uses a new radiance estimate that converges to the correct radiance value as more photons are used. It is not necessary to store the full photon map, and unlike standard photon mapping it possible to compute a global illumination solution with any desired accuracy using a limited amount of memory. Compared with existing Monte Carlo ray tracing methods progressive photon mapping provides an efficient and robust alternative in the presence of complex light transport such as caustics and in particular reflections of caustics.
+      - Photon Mapping is a two-pass algorithm. The first pass is photon tracing, which traces photons from the light sources into the scene and stores them in a photon map as they interact with the surfaces
+      - The second pass is rendering in which the photon map is used to estimate the illumination in the scene.
+      - In the ray tracing pass the photon map is used to estimate the radiance at different locations within the scene. This is done by locating the nearest photons and performing a nearest neighbor density estimation. Since the density estimation process can be considered as a way of loosely connecting paths from the eye to the light, photon mapping is very effective at rendering SDS paths. The density estimation process effectively blurs the lighting in the scene, and to represent sharp illumination details it is necessary to use a large number of photons.
+      - A simple and robust progressive global illumination algorithm based on photon mapping. Progressive photon mapping is a multi-pass algorithm where the first pass is ray tracing followed by any number of photon tracing passes. Each photon tracing pass results in an increasingly accurate global illumination solution that can be visualized in order to provide progressive feedback. Progressive photon mapping uses a new radiance estimate that converges to the correct radiance value as more photons are used. It is not necessary to store the full photon map, and unlike standard photon mapping it possible to compute a global illumination solution with any desired accuracy using a limited amount of memory. Compared with existing Monte Carlo ray tracing methods progressive photon mapping provides an efficient and robust alternative in the presence of complex light transport such as caustics and in particular reflections of caustics.
+      - <img width="408" height="540" alt="image" src="https://github.com/user-attachments/assets/56485068-a709-4cef-b63f-b73583a2bc14" />
+
       -  Fonte:
-         -  @incollection{hachisuka2008progressive,
-           title={Progressive photon mapping},
-           author={Hachisuka, Toshiya and Ogaki, Shinji and Jensen, Henrik Wann},
-           booktitle={ACM SIGGRAPH Asia 2008 papers},
-           pages={1--8},
-           year={2008}
-         }
+         -  <https://dl.acm.org/doi/pdf/10.1145/1457515.1409083>
+            @incollection{hachisuka2008progressive,
+              title={Progressive photon mapping},
+              author={Hachisuka, Toshiya and Ogaki, Shinji and Jensen, Henrik Wann},
+              booktitle={ACM SIGGRAPH Asia 2008 papers},
+              pages={1--8},
+              year={2008}
+           }
+      -  https://people.eecs.berkeley.edu/~sequin/CS184/TOPICS/GlobalIllumination/Gill_b.html
 
 4. **Métodos híbridos (2000+)**
    - **Instant Radiosity**
