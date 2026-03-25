@@ -162,6 +162,27 @@
 4. **Métodos híbridos (2000+)**
    - **Instant Radiosity**
      - Aproxima iluminação global com luzes virtuais
+     - Generates a particle approximation of the diffuse radiance in the scene using the quasi-random walk [Kel96b] based on the method of quasi-Monte Carlo integration. Then the graphics hardware renders an image with shadows for each particle used as point light source. Global illumination finally is obtained by summing up the single images in an accumulation buffer [HA90] and displaying the result. The algorithm calculates the average radiance
+     - combine the advantages of deterministic particle simulation of light, i.e. the quasi-random walk principle, with the available hardware capabilities to consistently render from the radiance equation, neither using a kernel nor an intermediate solution projection of the integral equation, resulting in a very fast, robust and straightforward to implement procedure.
+     - Instant radiosity [Kel97] and its variants form one category. These methods construct (quasi-)random paths from the light sources and deposit virtual point lights (VPLs) at the vertices of the paths. When used together with a suitable shadow solver, usually shadow maps, these point lights represent the full indirect illumination in the scene. Instant radiosity techniques are GPU-friendly due to the fact that most of the computation is spent on per-pixel lighting
+    
+     - Fonte:
+        - <https://dl.acm.org/doi/pdf/10.1145/258734.258769>
+           @inproceedings{keller1997instant,
+              title={Instant radiosity},
+              author={Keller, Alexander},
+              booktitle={Proceedings of the 24th annual conference on Computer graphics and interactive techniques},
+              pages={49--56},
+              year={1997}
+            }
+        - <https://www.nvidia.com/docs/io/67074/laine2007egsr_paper.pdf>
+           @inproceedings{laine2007incremental,
+              title={Incremental Instant Radiosity for Real-Time Indirect Illumination.},
+              author={Laine, Samuli and Saransaari, Hannu and Kontkanen, Janne and Lehtinen, Jaakko and Aila, Timo},
+              booktitle={Rendering Techniques},
+              pages={277--286},
+              year={2007}
+            }
 
    - **Final Gathering**
      - Refinamento de iluminação indireta
