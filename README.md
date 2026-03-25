@@ -131,7 +131,7 @@
               pages={65--76},
               year={1997}
             }
-         - 
+         - <https://www.semanticscholar.org/topic/Metropolis-light-transport/1141468>
 
    - **Light Tracing**
      - Raios partem da luz (não da câmera)
