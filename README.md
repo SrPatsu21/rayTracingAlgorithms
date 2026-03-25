@@ -214,7 +214,19 @@ rather than taking multiple time samples at every spatial location, the rays are
        - Sampling the solid angle of the light sources produces penumbras.
        - Sampling the camera lens area produces depth of field.
        - Sampling in time produces motion blur.
-    - 
+    - <img width="528" height="231" alt="Distributed Ray Tracing" src="https://github.com/user-attachments/assets/adaff941-2ea0-43eb-b9e4-1c976d17d1e6" />
+    - <img width="528" height="260" alt="Distributed Ray Tracing" src="https://github.com/user-attachments/assets/54e01c92-b129-442f-beee-2d495169b6af" />
+
+
+    - Font:
+    - <dl.acm.org/doi/pdf/10.1145/800031.808590>
+       @inproceedings{cook1984distributed,
+           title={Distributed ray tracing},
+           author={Cook, Robert L and Porter, Thomas and Carpenter, Loren},
+           booktitle={Proceedings of the 11th annual conference on Computer graphics and interactive techniques},
+           pages={137--145},
+           year={1984}
+         }
 
 5. **Técnicas modernas (2010+)**
    - **Progressive Path Tracing**
