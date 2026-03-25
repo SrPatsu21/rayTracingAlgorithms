@@ -206,6 +206,15 @@
        - Motion blur
        - Depth of field
        - Soft shadows
+    - Distributed ray tracing is a new approach to image synthesis. The key is that no extra rays are needed beyond those used for oversampling in space. For example,
+rather than taking multiple time samples at every spatial location, the rays are distributed in time so that rays at different spatial locations are traced at different instants of time.
+    - Once we accept the expense of oversampling in space, distributing the rays offers substantial benefits at little additional cost.
+       - Sampling the reflected ray according to the specular distribution function produces gloss (blurred reflection).
+       - Sampling the transmitted ray produces translucency (blurred transparency).
+       - Sampling the solid angle of the light sources produces penumbras.
+       - Sampling the camera lens area produces depth of field.
+       - Sampling in time produces motion blur.
+    - 
 
 5. **Técnicas modernas (2010+)**
    - **Progressive Path Tracing**
