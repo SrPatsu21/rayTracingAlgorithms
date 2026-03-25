@@ -188,6 +188,18 @@
 
    - **Final Gathering**
      - Refinamento de iluminação indireta
+     - The method proposed here uses a randomly sampled global ray direction [Szirmay-Kalos 1998]. Using this direction, expensive ray intersection can be regarded as a multi-layered parallel projection (see Figure 1). Since graphics hardware can process matrix transformation including parallel projection very fast, such a method is natural and efficient compared with using GPU as a parallel ray tracing processor. Intersection points of global ray direction from sampling points cannot be obtained by single parallel projection, so inverse of depth peeling [Everitt 2001] is used instead to get actual intersection points. Each depth layer is projected from far to near and intersection points sample nearest depth layer. Depth layer texel behind the intersection point is culled by a KILL operation. To reduce the number of depth peeling iterations, criteria based on the number of sampled points can be used to stop the iteration without significant error on resulting image. Since the proposed method is per-pixel, it can process any form of problem that requires a large number of samples on hemisphere such as pre-computation of radiance transfer. To apply this method to a global illumination problem, some pre-computed rough global illumination solution of the scene is needed so I use grid photon map as a pre-process in the demo.
+     - <img width="606" height="298" alt="Final Gathering" src="https://github.com/user-attachments/assets/e30b5d8f-9e64-483e-9615-51cbfa0f85ee" />
+     - Fonte:
+        - <https://cs.uwaterloo.ca/~thachisu/gpufg.pdf>
+           @inproceedings{hachisuka2004final,
+              title={Final gathering on GPU},
+              author={Hachisuka, Toshiya},
+              booktitle={ACM Workshop on General Purpose Computing on Graphics Processors},
+              volume={3},
+              year={2004}
+            }
+
 
    - **Distributed Ray Tracing**
      - Amostragem para:
