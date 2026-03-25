@@ -119,6 +119,9 @@
      - A Monte Carlo method for solving the light transport problem, inspired by the Metropolis sampling method in computational physics. To render an image, we generate a sequence of light transport paths by randomly mutating a single current path
      - Each mutation is accepted or rejected with a care-fully chosen probability, to ensure that paths are sampled according to the contribution they make to the ideal image. We then estimate this image by sampling many paths, and recording their locations on the image plane.
      - The key advantage of the Metropolis approach is that the path space is explored locally, by favoring mutations that make small changes to the current path. This has several consequences. First, the average cost per sample is small (typically only one or two rays). Second, once an important path is found, the nearby paths are explored as well, thus amortizing the expense of finding such paths over many samples. Third, the mutation set is easily extended. By constructing mutations that preserve certain properties of the path (e.g. which light source is used) while changing others, we can exploit various kinds of coherence in the scene. It is often possible to handle difficult lighting problems efficiently by designing a specialized mutation in this way.
+     - <img width="670" height="376" alt="Metropolis light transport" src="https://github.com/user-attachments/assets/dff27d04-2f03-417a-b5dc-6970209e2f49" />
+     - <img width="844" height="384" alt="Metropolis light transport" src="https://github.com/user-attachments/assets/33480741-c140-48e9-ab3e-ac98f83f7635" />
+
      - Fonte:
         - <https://dl.acm.org/doi/pdf/10.1145/258734.258775>
            @inproceedings{veach1997metropolis,
