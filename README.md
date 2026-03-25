@@ -135,6 +135,7 @@
 
    - **Light Tracing**
      - Raios partem da luz (não da câmera)
+     - existe porem n achei artigo relacionado
 
    - **Photon Mapping**
      - Henrik Wann Jensen
