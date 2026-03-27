@@ -242,6 +242,29 @@ rather than taking multiple time samples at every spatial location, the rays are
 5. **Técnicas modernas (2010+)**
    - **Progressive Path Tracing**
      - Refinamento progressivo da imagem
+     - designed an improved bilateral filtering algorithm with use of the gradient feature to obtain the noise-free images. Experimental results demonstrate that our framework outperforms the state-of-the-art path tracing denoising methods in terms of the visual quality, numerical error , and time cost.
+     -  A real-time previsualization framework is presented, which renders the solution with a low number of samples during interaction and allows for progressive quality improvement. If a user requests the high-quality solution of a certain view, the tracking is stopped and the algorithm progressively converges to an accurate solution.
+     - Fonte:
+     - <https://link.springer.com/article/10.1007/s11042-020-09650-7>
+        @article{xing2021progressive,
+           title={Progressive path tracing with bilateral-filtering-based denoising},
+           author={Xing, Qiwei and Chen, Chunyi and Li, Zhihua},
+           journal={Multimedia Tools and Applications},
+           volume={80},
+           number={1},
+           pages={1529--1544},
+           year={2021},
+           publisher={Springer}
+         }
+     - <http://peterkan.com/download/isvc.pdf>
+        @inproceedings{kan2013differential,
+           title={Differential progressive path tracing for high-quality previsualization and relighting in augmented reality},
+           author={K{\'a}n, Peter and Kaufmann, Hannes},
+           booktitle={International Symposium on Visual Computing},
+           pages={328--338},
+           year={2013},
+           organization={Springer}
+         }
 
    - **Vertex Connection and Merging (VCM)**
      - Combina BDPT + Photon Mapping
