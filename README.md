@@ -312,12 +312,39 @@ rather than taking multiple time samples at every spatial location, the rays are
      - Usa redes neurais para:
        - Denoising
        - Amostragem
+       - Rendering a single frame consists of computing pixel colors and updating the neural radiance cache; see Figure 2 for an illustration. First, we trace short rendering paths, one for each pixel, and terminate them as soon as the approximation provided by the radi ance cache is deemed sufficiently accurate. We use the heuristic by Bekaert et al . [2003], that was originally developed in the context of
+       - For rendering, we trace short “rendering” paths (e.g. x0 · · · x2) and terminate them into the neural radiance cache; queries of cached radiance b𝐿s are highlighted by red arrows. To optimize the cache, we extend a small subset of the rendering paths by a few vertices (called “training suffix”, e.g. y2 · · · y4). We collect radiance estimates (blue arrows) to update the neural radiance cache along the vertices of the longer training path, reusing the initial path segment that was already traced for rendering. Furthermore, the online training together with the termination of training paths into the cache progressively increases the number of simulated light bounces.
+       - <img width="637" height="234" alt="image" src="https://github.com/user-attachments/assets/30334c09-6aa3-480d-a20e-7d629883d229" />
+       - Fonte
+       - <https://arxiv.org/pdf/2106.12372>
+          @article{muller2021real,
+              title={Real-time neural radiance caching for path tracing},
+              author={M{\"u}ller, Thomas and Rousselle, Fabrice and Nov{\'a}k, Jan and Keller, Alexander},
+              journal={arXiv preprint arXiv:2106.12372},
+              year={2021}
+            }
 
    - **Differentiable Ray Tracing**
      - Permite otimização (usado em ML)
+     - a general-purpose differentiable ray tracer, which, to our knowledge, is the first comprehensive solution that is able to compute derivatives of scalar functions over a rendered image with respect to arbitrary scene parameters such as camera pose, scene geometry, materials, and lighting parameters.
+     - The key to our method is a novel edge sampling algorithm that directly samples the Dirac delta functions introduced by the derivatives of the discontinuous integrand. We also develop efficient importance sampling methods based on spatial hierarchies. Our method can generate gradients in times running from seconds to minutes depending on scene complexity and desired precision. We interface our differentiable ray tracer with the deep learning library PyTorch and show prototype applications in inverse rendering and the generation of adversarial examples for neural networks.
+     - Our task is the following: given a 3D scene with a continuous parameter set Φ (including camera pose, scene geometry, material and lighting parameters), we generate an image using the path tracing algorithm [Kajiya 1986]. Given a scalar function computed from the image (e.g. a loss function we want to optimize), our goal is to backpropagate the gradient of the scalar with respect to all scene parameters Φ.
+     - The pixel color is formalized as an integration over all light paths that pass through the pixel filter. We use Monte Carlo sampling to estimate both the integral and the gradient of the integral. However, since the integrand is discontinuous due to edges of geometry and occlusion, traditional area sampling does not correctly capture the changes due to camera parameters or triangle vertex movement (Figure 2 (a)). Mathematically, the gradient of the discontinuous integrand is a Dirac delta function, therefore traditional sampling has zero probability of capturing the Dirac deltas.
+     - Our strategy for computing the gradient integral is to split it into smooth and discontinuous regions (Figure 2). For the smooth part of the integrand (e.g. Phong shading or bilinear texture reconstruction) we employ traditional area sampling with automatic differentiation. For the discontinuous part we use a novel edge sampling method to capture the changes at boundaries. In the following subsection, we first focus on primary visibility where we only integrate over the 2D screen-space domain (Section 3.1). We then generalize the method to handle shadow and global illumination
+     - <img width="725" height="691" alt="image" src="https://github.com/user-attachments/assets/79e166a0-762b-4fd4-b6f5-80375c845f0a" />
 
 - **Fontes:**
-   - <https://ceur-ws.org/Vol-3150/short3.pdf>
+   - <ttps://dl.acm.org/doi/pdf/10.1145/3272127.3275109>
+   @article{li2018differentiable,
+     title={Differentiable monte carlo ray tracing through edge sampling},
+     author={Li, Tzu-Mao and Aittala, Miika and Durand, Fr{\'e}do and Lehtinen, Jaakko},
+     journal={ACM Transactions on Graphics (TOG)},
+     volume={37},
+     number={6},
+     pages={1--11},
+     year={2018},
+     publisher={ACM New York, NY, USA}
+   }
 
 ## Estruturas de aceleração:
 1. **Clássicas**
