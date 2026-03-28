@@ -268,6 +268,17 @@ rather than taking multiple time samples at every spatial location, the rays are
 
    - **Vertex Connection and Merging (VCM)**
      - Combina BDPT + Photon Mapping
+     - Bidirectional path tracing (BPT) and photon mapping (PM) are probably the two most versatile physically based rendering algorithms available today. It has been acknowledged that BPT and PM are complementary in terms of the types of light transport effects they can efficiently capture. Our recently proposed vertex connection and merging (VCM) algorithm aims to leverage the advantages of both methods by combining vertex connection techniques from BPT and vertex merging techniques from PM via multiple importance sampling
+     - <img width="1165" height="627" alt="image" src="https://github.com/user-attachments/assets/f52f4b49-8b21-4f5b-8753-a1186e78be7b" />
+     - Fonte
+        - <http://iliyan.com/publications/ImplementingVCM/ImplementingVCM_TechRep2012_rev2.pdf>
+           @article{georgiev2012implementing,
+              title={Implementing vertex connection and merging},
+              author={Georgiev, Iliyan},
+              journal={Technical Re-port. Saarland University},
+              year={2012}
+            }
+        - 
 
    - **Unified Path Sampling**
      - Unifica vários métodos Monte Carlo
