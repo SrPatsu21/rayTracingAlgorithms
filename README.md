@@ -287,12 +287,26 @@ rather than taking multiple time samples at every spatial location, the rays are
      - Variante do MLT
 
 6. **Estado da arte atual (2018+)**
-   - **ReSTIR (Reservoir-based Spatiotemporal Importance Resampling)**
+   - **ReSTIR (Reservoir-based Spatiotemporal Importance Resampling) && ReSTIR GI (Extensão para iluminação global)**
      - Reutiliza amostras entre pixels/frames
      - Muito usado em tempo real
-
-   - **ReSTIR GI**
-     - Extensão para iluminação global
+     - The original ReSTIR algorithm [BWP∗20] places initial samples using light sampling where the source PDF p(x) samples uniformly on the surfaces of lights that are themselves sampled according to their emitted power. The target function p̂(x) is then given by the unshadowed reflected radiance due to the light sample, which is given by the product of emitted radiance, the BSDF, and the geometric coupling term.
+     - To apply ReSTIR to sample indirect illumination, we must represent directions that contribute to indirect illumination. Because this representation must support both spatial and temporal reuse at different points in space, unit vectors on the local hemisphere of directions are an inconvenient representation. We therefore associate points on surfaces with the radiance they scatter back along an incident ray.
+     - We will say that the visible points are the positions on surfaces in the scene that are visible from the camera at each pixel. At each visible point, a direction is randomly sampled and a ray is traced to find the closest surface intersection; these intersections are called sample points. Sample generation is described in more detail in Section 4.1. After sample points have been generated, resampling is performed and shaded values are computed at each visible point (Section 4.2). Figure 2 compares ReSTIR for direct lighting to ReSTIR GI and Figure 4 summarizes the algorithm.
+     - Original ReSTIR and ReSTIR GI. (a) The original ReSTIR algorithm [BWP∗20] starts by generating random samples on the lights in the scene. (b) After resampling, the original samples with no contribution are discarded; the useful samples are shared spatially and temporally and are used with probability based on their contribution. (c) Our approach generates initial samples by sampling random directions and tracing rays to find the closest intersections. Reflected radiance is computed at these intersections with path tracing. (d) Spatial and temporal resampling is applied in a similar manner. Doing so makes it possible to find directions that give meaningful indirect illumination, which is not handled by ReSTIR.
+     - <img width="1353" height="334" alt="image" src="https://github.com/user-attachments/assets/cd303014-c144-40c7-8e54-f8fecb326444" />
+     - Fonte
+        - <https://onlinelibrary.wiley.com/doi/full/10.1111/cgf.14378?casa_token=l_hjR-IIzaAAAAAA%3AG8y5HCiHoLmvkbxpdOM1G8kCeGX6bie-PwggzKpQ0Z3g_FBHZLImK70sUtsBh5ybGVuw-I63ZweG37LtTw>
+        @inproceedings{ouyang2021restir,
+           title={ReSTIR GI: Path resampling for real-time path tracing},
+           author={Ouyang, Yaobin and Liu, Shiqiu and Kettunen, Markus and Pharr, Matt and Pantaleoni, Jacopo},
+           booktitle={Computer graphics forum},
+           volume={40},
+           number={8},
+           pages={17--29},
+           year={2021},
+           organization={Wiley Online Library}
+         }
 
    - **Neural Path Tracing**
      - Usa redes neurais para:
