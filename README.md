@@ -372,6 +372,23 @@ rather than taking multiple time samples at every spatial location, the rays are
           - <https://slideplayer.com/slide/14175246/> <https://slideplayer.com/slide/14175246/86/images/20/Bounding+Volume+Hierarchies+%28BVH%29.jpg>
    - **KD-Tree**
      - Muito eficiente, mas caro de construir
+     - that maintains its high space utilization and excellent query and update performance regardless of the number of updates performed on it. The Bkd-tree is based on a well-known extensions of the kd-tree, called the K-D-B-tree, and on the so-called logarithmic method for making a static structure dynamic. As we show through extensive experimental studies, the Bkd-tree is able to achieve the almost 100% space utilization and the fast query processing of a static K-D-B-tree. However, unlike the K-D-B-tree, these properties are maintained over massive updates.
+     - While static versions of the kd-tree have been shown to have excellent query performance in many practical situations, an efficient dynamic version has proven hard to develop. In the following, we give a brief overview of the internal memory kd-tree structure and then discuss the two most important previous approaches for obtaining external memory dynamic kd-trees.
+     - In two dimensions, the kd-tree consists of a height log2 N  binary tree representing a recursive decomposition of the plane by means of axis-orthogonal lines partitioning the point set into two equal subsets.1 On even levels the line is orthogonal to the x-axis, while on odd levels it is orthogonal to the y-axis. The data points themselves are stored in the leaves.
+     - <img width="720" height="540" alt="image" src="https://github.com/user-attachments/assets/06c23b55-3fd0-414d-a560-cbf91e3cc714" />
+
+     - Fonte:
+        - <https://users.cs.duke.edu/~pankaj/publications/papers/bkd-sstd.pdf>
+           @inproceedings{procopiuc2003bkd,
+                 title={Bkd-tree: A dynamic scalable kd-tree},
+                 author={Procopiuc, Octavian and Agarwal, Pankaj K and Arge, Lars and Vitter, Jeffrey Scott},
+                 booktitle={International symposium on spatial and temporal databases},
+                 pages={46--65},
+                 year={2003},
+                 organization={Springer}
+            }
+        - <https://slidetodoc.com/today-kdtrees-bsp-trees-10112001-cs-638-fall/>
+
    - **Uniform Grid**
      - Simples
      - Ruim em cenas não uniformes
