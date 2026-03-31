@@ -466,7 +466,18 @@ a priori fix the memory footprint. It can be considered as the cross-over of the
      - <img width="726" height="749" alt="image" src="https://github.com/user-attachments/assets/a7c6af0b-eb18-4df1-ba35-37fb9ed3d0d5" />
      - The inner nodes of the tree are described by the two clipping planes and a pointer to a pair of children. As this sums up to 12 bytes in total, all nodes are aligned on four-byte-boundaries. This allows one to use the lower two bits of the children-pointer to indicate the axis (00: x, 01: y, 10: z) or a leaf (case 11). Leaf nodes consist of a 32bit-pointer to the referenced objects and their overall number. The overhead of four bytes in the leafs (as they only use eight bytes out of the node data structure) can be resolved by a careful implementation.
      - <img width="715" height="339" alt="image" src="https://github.com/user-attachments/assets/ccf26c8d-c6b7-426c-abb6-f42c962f24c9" />
-  
+     - Fonte:
+        - <https://diglib.eg.org/server/api/core/bitstreams/c4d20a14-839e-4335-ab16-549542dc6398/content>
+           @article{wachter2006instant,
+              title={Instant ray tracing: The bounding interval hierarchy.},
+              author={W{\"a}chter, Carsten and Keller, Alexander},
+              journal={Rendering Techniques},
+              volume={2006},
+              number={139-149},
+              pages={130},
+              year={2006}
+            }
+
      - **Grid Hierárquico**
      - Combinação de grids
 
