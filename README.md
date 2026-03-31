@@ -392,6 +392,23 @@ rather than taking multiple time samples at every spatial location, the rays are
    - **Uniform Grid**
      - Simples
      - Ruim em cenas não uniformes
+     - The technique, invented by the second author, is a flat, and thus non-hierarchical, grid whose resolution adapts to the data. It is especially suitable for telling efficiently which pairs of a large number of short edges intersect. Several of the algorithms presented here exist as working programs (among which is a visible surface program for polyhedra) and can handle large data sets (i.e. many thousands of geometric objects). Furthermore, the uniform grid is appropriate for parallel processing; the parallel implementation presented gives very good speed-up results.
+     - which the authors believe may be quite fundamental in geometric computing in the sense understood above. (To word this claim a little more mildly, it must be stated that the grid is not a theoretical contribution on the lines of, for example, duality.) The uniform grid was invented by the second author more than a decade ago 2 and since then it has been successfully used to solve a rich collection of geometric problems. Among those problems, whose execution time the uniform grid vastly improves.
+     - The uniform grid* is a regular grid overlaid on a scene. The 'fineness' of the grid is an experimentally determined function of the statistics of the given geometric objects. The uniform grid is especially suitable for telling efficiently which pairs of a large number of short edges intersect. This is the most time-consuming operation in programs aimed at resolving the issues cited in the preceding paragraph.
+     - <img width="1024" height="768" alt="image" src="https://github.com/user-attachments/assets/28ac0e7c-d3a6-4973-b61a-babdb716bef0" />
+     - Fonte:
+        - <https://repository.bilkent.edu.tr/server/api/core/bitstreams/d1483aa4-bae8-47d3-8496-d26606d46bbf/content>
+           @article{meagher1982geometric,
+              title={Geometric modeling using octree encoding},
+              author={Meagher, Donald},
+              journal={Computer graphics and image processing},
+              volume={19},
+              number={2},
+              pages={129--147},
+              year={1982},
+              publisher={Elsevier}
+            }
+        - <https://www.slideserve.com/manju/ray-casting>
    - **Octree**
      - Divisão recursiva do espaço
 
