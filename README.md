@@ -430,6 +430,32 @@ rather than taking multiple time samples at every spatial location, the rays are
 
    - **BSP Tree (Binary Space Partitioning)**
      - Generalização do KD-tree
+     - A Binary Space Partitioning (BSP) tree is simple and powerful data structure that can b e used to solve a variety of geometrical problems. In case of the ray tracing a BSP tree is often constructed using splitting planes perpendicular to principal axes only. It is advantageous especially when rendered objects with complex shapes are enclosed by axis{aligned bounding boxes. Moreover, the orthogonality of BSP tree decreases the numb er of computations required for an intersection of a ray and a splitting plane.
+     - When nding the nearest object pierced by a ray during rendering process, a BSP tree is traversed from the root to the leaves. Corrected sequence of leaves has to be identied for a given ray origin and direction. The nearest leaf has to be processed first. The splitting plane subdivides a rectangular cell into two smaller ones. The test performed during the traversal has to determine, whether to visit both nodes and in which order or just one node and which one.
+     - <img width="802" height="754" alt="image" src="https://github.com/user-attachments/assets/39781def-a232-493f-b1c2-0db22cce43d4" />
+     - a BSP is a binary tree that partitions space into two half-spaces according to a splitting plane. This property allows BSPs to be used as a binary search tree to locate objects embedded in that space. If a splitting plane intersects an object, the object must be put on both sides of the plane. This property can in theory lead to poor quality BSP trees with Ω(n2) nodes for certain configurations of n non-intersecting triangles in ℜ3 [13]. However, in practice this will not occur and space should be closer to linear. In fact, if we only have fat triangles — which means there are no long and skinny triangles — then there exist BSP trees with linear size [3]. Assuming the tree is well balanced, query time is usually O(log n). Build time depends on the algorithm used to pick the splitting planes. An algorithm that chose the optimal splitting planes would likely take at least exponential time which is not feasible. For this reason, splitting planes are usually chosen at random, to divide space or the elements in half, or using some other heuristic such as the greedy
+     - Fonte:
+        - <https://www.researchgate.net/profile/Vlastimil-Havran/publication/266448413_Fast_robust_BSP_tree_traversal_algorithm_for_ray_tracing/links/58ef3dcda6fdcc61cc128e92/Fast-robust-BSP-tree-traversal-algorithm-for-ray-tracing.pdf>
+           @article{havran1997fast,
+              title={Fast robust BSP tree traversal algorithm for ray tracing},
+              author={Havran, Vlastimil and Kopal, Tomas and Bittner, Ji{\v{r}}{\'\i} and {\v{Z}}{\'a}ra, Ji{\v{r}}{\'\i}},
+              journal={Journal of graphics tools},
+              volume={2},
+              number={4},
+              pages={15--23},
+              year={1997},
+              publisher={Taylor \& Francis}
+            }
+        - <https://www.researchgate.net/profile/Ingo-Wald/publication/4375571_Ray_tracing_with_the_BSP_tree/links/00463524acc7c34e8f000000/Ray-tracing-with-the-BSP-tree.pdf>
+           @inproceedings{ize2008ray,
+              title={Ray tracing with the BSP tree},
+              author={Ize, Thiago and Wald, Ingo and Parker, Steven G},
+              booktitle={2008 IEEE Symposium on Interactive Ray Tracing},
+              pages={159--166},
+              year={2008},
+              organization={IEEE}
+            }
+
    - **Bounding Interval Hierarchy (BIH)**
      - Mais simples que BVH
    - **Grid Hierárquico**
