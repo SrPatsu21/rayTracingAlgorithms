@@ -411,6 +411,20 @@ rather than taking multiple time samples at every spatial location, the rays are
         - <https://www.slideserve.com/manju/ray-casting>
    - **Octree**
      - Divisão recursiva do espaço
+     - A geometric modeling technique called Octree Encoding is presented. Arbitrary 3-D objects can be represented to any specified resolution in a hierarchical 8-ary tree structure or “octree” Objects may be concave or convex, have holes (including interior holes), consist of disjoint parts, and possess sculptured (i.e., “free-form”) surfaces. The memory required for representation and manipulation is on the order of the surface area of the object. A complexity metric is proposed based on the number of nodes in an object's tree representation. Efficient (linear time) algorithms have been developed for the Boolean operations (union, intersection and difference), geometric operations (translation, scaling and rotation), N-dimensional interference detection, and display from any point in space with hidden surfaces removed. 
+     - <img width="921" height="844" alt="image" src="https://github.com/user-attachments/assets/60dfa5bd-47c5-4689-abc6-b9186a501420" />
+     - Fonte:
+        - <https://fab.cba.mit.edu/classes/S62.12/docs/Meagher_octree.pdf>
+           @article{meagher1982geometric,
+              title={Geometric modeling using octree encoding},
+              author={Meagher, Donald},
+              journal={Computer graphics and image processing},
+              volume={19},
+              number={2},
+              pages={129--147},
+              year={1982},
+              publisher={Elsevier}
+            }
 
 2. **Intermediárias**
 
