@@ -458,7 +458,16 @@ rather than taking multiple time samples at every spatial location, the rays are
 
    - **Bounding Interval Hierarchy (BIH)**
      - Mais simples que BVH
-   - **Grid Hierárquico**
+     - The Bounding Interval Hierarchy is a simple algorithm, which at the same time offers exceptional speed for both static and dynamic scenes, features much higher numerical precision, and allows one to
+a priori fix the memory footprint. It can be considered as the cross-over of the advantages of partitioning object lists and efficiently traversing spatial partitions
+     - Comparisons with two fully optimized state-of-the-art kd-tree based ray tracers (InView and our own implementation) show that it can outperform them for most scenes by a factor of two to even some orders of magnitudes for both total rendering time and overall memory consumption
+     - Unlike classic bounding volume hierarchies [KK86,GM03], which store a full axis aligned bounding box for each child, the idea of the bounding interval hierarchy is to only store two parallel planes perpendicular to either one of x, y, and z-axis.
+     - Given a bounding box and the axis, the left child L results from replacing the maximum value along that axis by the first plane. In an analogue way the right child R results from replacing the minimum value by the second plane (see figure 2). Resulting zero volumes are used to represent empty children.
+     - <img width="726" height="749" alt="image" src="https://github.com/user-attachments/assets/a7c6af0b-eb18-4df1-ba35-37fb9ed3d0d5" />
+     - The inner nodes of the tree are described by the two clipping planes and a pointer to a pair of children. As this sums up to 12 bytes in total, all nodes are aligned on four-byte-boundaries. This allows one to use the lower two bits of the children-pointer to indicate the axis (00: x, 01: y, 10: z) or a leaf (case 11). Leaf nodes consist of a 32bit-pointer to the referenced objects and their overall number. The overhead of four bytes in the leafs (as they only use eight bytes out of the node data structure) can be resolved by a careful implementation.
+     - <img width="715" height="339" alt="image" src="https://github.com/user-attachments/assets/ccf26c8d-c6b7-426c-abb6-f42c962f24c9" />
+  
+     - **Grid Hierárquico**
      - Combinação de grids
 
 3. **Modernas / GPU**
