@@ -355,6 +355,21 @@ rather than taking multiple time samples at every spatial location, the rays are
        - SAH BVH
        - LBVH (GPU)
        - HLBVH
+       - Bounding volume hierarchies (BVH) are a commonly used method for speeding up ray tracing. Even though the memory footprint of a BVH is relatively low compared to other acceleration data structures, they still can consume a large amount of memory for complex scenes and exceed the memory bounds of the host system
+       - The idea behind a BVH is to subdivide the primitives of a scene into possibly overlapping sets.
+       - For each of these sets a bounding volume (BV) is computed and these are arranged in a tree structure. The bounds of every node in this tree are chosen so that it exactly bounds all the nodes in the corresponding subtree and every leaf node exactly bounds the contained primitives. Ray traversal then starts at the root node and if a ray misses a BV in this hierarchy, the whole subtree can be skipped.
+       - <img width="1024" height="768" alt="image" src="https://github.com/user-attachments/assets/af11677b-764e-473f-9df7-96ed145ff82d" />
+
+       - Fonte:
+          - <https://diglib.eg.org/server/api/core/bitstreams/68ca5e89-763a-4254-b498-245009148c62/content>
+             @inproceedings{bauszat2010minimal,
+                 title={The Minimal Bounding Volume Hierarchy.},
+                 author={Bauszat, Pablo and Eisemann, Martin and Magnor, Marcus A},
+                 booktitle={VMV},
+                 pages={227--234},
+                 year={2010}
+               }
+          - <https://slideplayer.com/slide/14175246/> <https://slideplayer.com/slide/14175246/86/images/20/Bounding+Volume+Hierarchies+%28BVH%29.jpg>
    - **KD-Tree**
      - Muito eficiente, mas caro de construir
    - **Uniform Grid**
