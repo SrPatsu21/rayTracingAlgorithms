@@ -480,7 +480,31 @@ a priori fix the memory footprint. It can be considered as the cross-over of the
 
      - **Grid Hierárquico**
      - Combinação de grids
-
+     - Cartesian hierarchical grid methods based on the concept of averaged control volumes. The application of this multilevel method to a Cartesian cut-cell method is discussed in detail, before results of numerical examples are reported to validate the novel method.
+     - The inefficiency of customary multigrid methods on Cartesian grids with embedded boundaries requires a new multilevel concept for this application. This new concept is based on the following novelties: a formulation of a multigrid method for Cartesian hierarchical grid methods, the concept of averaged control volumes, and a mesh adaptation strategy allowing to directly control the number of refined and coarsened cells.
+     - <img width="1124" height="700" alt="image" src="https://github.com/user-attachments/assets/c25c2564-95c5-4a38-9cd2-14fd0ad9c318" />
+     - Fonte
+        - <https://www.sciencedirect.com/science/article/pii/S0010448516300173?casa_token=WpiAvkIGIigAAAAA:KV1bugmAjX1mt3WXWhoRAF7fzIt-YKcZxv2Mg7zNNZbtaCwDMo0ydbaf6SGGQPdVRgDbDwj8E8twGA>
+           @article{mahdavi2016hierarchical,
+              title={Hierarchical grid conversion},
+              author={Mahdavi-Amiri, Ali and Harrison, Erika and Samavati, Faramarz},
+              journal={Computer-Aided Design},
+              volume={79},
+              pages={12--26},
+              year={2016},
+              publisher={Elsevier}
+            }
+        - <https://www.sciencedirect.com/science/article/pii/S0045793007002010?casa_token=jYOSnmfMG4gAAAAA:o5gvNunddNAPYn1-jxLp9kmzt6McsujYiTrVlkk_jys7pbrkjOAds0zce4ejIuvGNvlAbS1IlSNTcw>
+           @article{hartmann2008adaptive,
+              title={An adaptive multilevel multigrid formulation for Cartesian hierarchical grid methods},
+              author={Hartmann, Daniel and Meinke, Matthias and Schr{\"o}der, Wolfgang},
+              journal={Computers \& Fluids},
+              volume={37},
+              number={9},
+              pages={1103--1125},
+              year={2008},
+              publisher={Elsevier}
+            }
 3. **Modernas / GPU**
 
    - **Linear BVH (LBVH)**
