@@ -510,7 +510,23 @@ a priori fix the memory footprint. It can be considered as the cross-over of the
    - **Linear BVH (LBVH)**
      - Construção rápida em GPU
      - Bounding volume hierarchies (BVHs) are widely used to accelerate intersection computations for ray tracing, collision detection, visibility culling, and similar applications.
-     - 
+     - A hybrid construction algorithm that builds the highest levels of the tree with the LBVH algorithm and builds the rest with the SAH algorithm.
+     - The simplest approach to parallelizing BVH construction is to reduce it to a sorting problem. This is the approach taken by our LBVH construction which begins by ordering all n input primitives along a space-filling curve, thus “linearizing” them into a single fixed sequence of length n.
+     - Given this sequence, we construct the tree by recursively splitting intervals of this sequence and creating corresponding nodes. The root corresponds to the interval [0, n), its children to a partition [0, m), [m, n) of the root interval, and so on. Thus every node in the BVH will correspond to a range of indices [l i, ri) in the sequence of primitives
+     - <img width="728" height="643" alt="image" src="https://github.com/user-attachments/assets/8b2e8c06-7899-4308-9a25-d45ff21b7bc5" />
+     - Fonte:
+        - <https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1467-8659.2009.01377.x?casa_token=BcWgTRfF2iEAAAAA%3AQevqZMtFSPDZpWjoPmHnxCTm8rSBI9_EKLu8kYIQxJwlIfsgY_nNgBmyaKLDfMxm8S8VgTxCLMdKzAqBlA>
+           @inproceedings{lauterbach2009fast,
+              title={Fast BVH construction on GPUs},
+              author={Lauterbach, Christian and Garland, Michael and Sengupta, Shubhabrata and Luebke, David and Manocha, Dinesh},
+              booktitle={Computer Graphics Forum},
+              volume={28},
+              number={2},
+              pages={375--384},
+              year={2009},
+              organization={Wiley Online Library}
+            }
+
    - **Hierarchical LBVH (HLBVH)**
      - Combina qualidade + velocidade
    - **Wide BVH (BVH4, BVH8)**
