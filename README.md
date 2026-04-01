@@ -509,6 +509,8 @@ a priori fix the memory footprint. It can be considered as the cross-over of the
 
    - **Linear BVH (LBVH)**
      - Construção rápida em GPU
+     - Bounding volume hierarchies (BVHs) are widely used to accelerate intersection computations for ray tracing, collision detection, visibility culling, and similar applications.
+     - 
    - **Hierarchical LBVH (HLBVH)**
      - Combina qualidade + velocidade
    - **Wide BVH (BVH4, BVH8)**
