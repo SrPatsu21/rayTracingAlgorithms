@@ -529,6 +529,22 @@ a priori fix the memory footprint. It can be considered as the cross-over of the
 
    - **Hierarchical LBVH (HLBVH)**
      - Combina qualidade + velocidade
+     - Inspired by the recent work of Garanzha and Loop, we extend the approach of Lauterbach by introducing a novel hierarchical algorithm that reduces substantially both the amount of computations and the memory traffic required to build a Linear Bounding Volume Hierarchy (LBVH), while still exposing a data-parallel structure. As our algorithm is based on extracting and exploiting coarse-grained spatial coherence already present in the input meshes, it is particularly efficient for sorting dynamic geometry, where the mesh to be sorted at a given time step is defined as a transformation of a mesh which has been already sorted at the previous time step. Unlike much previous work based on refitting an existing BVH to new vertex positions, our algorithm performs a full sorting operation each frame. This suppports dynamic geometry well, since the algorithm output does not use and is not sensitive to the quality of the BVH constructed at the previous frame. Moreover, it produces efficient hierarchies even for chaotic or discontinuous transformations, as in fracture or explosion.
+     - Our contribution starts with the observation that each value assumed by a Morton code identifies a voxel of a regular grid spanning the scene’s bounding box (see Figure 2), and that the higher bits represent the parent voxels in a hypothetical hierarchy of such grids: the highest order 3 bits represent the coarsest grid of 8 voxels, the next 3 bits represent a subdivision of each voxel of the coarsest grid in 8 octants, and so on. Each additional bit splits the parent in two.
+     - The original LBVH algorithm was implemented using a Morton curve of order n = 10, resulting in a 30 bit grid. Our algorithm splits the original LBVH algorithm into a 2-level hierarchical problem, where the first level of the hierarchy consists in sorting the primitives into a coarse 3m bit grid according to an m-bit Morton curve (with m < n), and the second level consists in sorting all primitives within each voxel of the coarse grid according to the remaining 3(n − m) bits.
+     - If m is relatively small (e.g. 5 or 6), two consecutive primitives in the input mesh will likely fall in the same voxel of the coarse grid. In other words, the higher the spatial coherence of the input mesh, the higher the probability that the most significant 3m bits of the Morton codes of two consecutive primitives will be the same. We exploit this fact by using a CSD scheme to perform this top level sorting operation and build the corresponding BVH tree. Once the top level tree is built, we proceed with sorting according to the remaining bits and creating the missing levels of the BVH tree. In practice, primitive sorting and hierarchy emission can be decoupled, and we describe them separately.
+     - <img width="577" height="546" alt="image" src="https://github.com/user-attachments/assets/68964650-61da-4f5e-a4c6-9a15bead72ef" />
+     - <img width="499" height="394" alt="image" src="https://github.com/user-attachments/assets/b7f86a7e-5b42-46fa-83d1-79a58d517e0b" />
+     - Fonte
+        - <https://www.researchgate.net/profile/Jacopo-Pantaleoni/publication/221249014_HLBVH_Hierarchical_LBVH_construction_for_real-time_ray_tracing_of_dynamic_geometry/links/56320a1508ae0530378e1864/HLBVH-Hierarchical-LBVH-construction-for-real-time-ray-tracing-of-dynamic-geometry.pdf>
+        @inproceedings{pantaleoni2010hlbvh,
+           title={HLBVH: Hierarchical LBVH construction for real-time ray tracing of dynamic geometry},
+           author={Pantaleoni, Jacopo and Luebke, David},
+           booktitle={Proceedings of the Conference on High Performance Graphics},
+           pages={87--95},
+           year={2010}
+         }
+
    - **Wide BVH (BVH4, BVH8)**
      - Melhor uso de SIMD
    - **Compressed BVH**
