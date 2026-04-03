@@ -547,8 +547,37 @@ a priori fix the memory footprint. It can be considered as the cross-over of the
 
    - **Wide BVH (BVH4, BVH8)**
      - Melhor uso de SIMD
+     - However the existing literature for GPU algorithms focuses on constructing binary BVHs while the current state-of-the-art for software and hardware raytracing is the wide BVH [YKL17,BMB∗24]: having more than two children per node results in shallower hierarchies thus lowering the latency of tree traversal, and allows for storing the sibling bounding boxes using a compressed representation to reduce the memory footprint
+     - In this paper, we propose a fast GPU algorithm for wide BVH construction. The key idea of our method is to use a bottom-up collapsing procedure which allows us to fuse this collapsing step with a bottom-up binary BVH builder such as H-PLOC
+     - This fused collapsing procedure consistently outperforms state-of-the-art GPU collapsing algorithms, and leads to lower frame time when tracing few rays per pixel.
+     - <img width="1254" height="345" alt="image" src="https://github.com/user-attachments/assets/23facbf8-4772-4111-a539-027ca39e2ced" />
+     - wide BVH construction algorithm is divided in three steps: first we integrate a bottom-up collapsing algorithm within an existing binary bottom-up BVH builder, allowing us to directly compute the topology of our wide BVH without additional traversal. Then we assign indices so that sibling nodes and triangles are numbered consecutively, and finally we write the wide BVH using a compressed representation.
+     - Fonte
+        - <https://onlinelibrary.wiley.com/doi/pdf/10.1111/cgf.70213>
+           @inproceedings{barbier2025fused,
+              title={Fused Collapsing for Wide BVH Construction},
+              author={Barbier, Wilhem and Paulin, Mathias},
+              booktitle={Computer Graphics Forum},
+              pages={e70213},
+              year={2025},
+              organization={Wiley Online Library}
+            }
+
    - **Compressed BVH**
      - Reduz memória
+     - Compressed-Leaf Bounding Volume Hierarchies (CLBVH), which strike a balance between compressed and non-compressed BVH layouts. Our CLBVH layout introduces dedicated compressed multileaf nodes where most effective at reducing memory use, and uses regular BVH nodes for inner nodes and small, isolated leaves.
+     - One way to reduce this memory overhead is to compress the acceleration data structure. Compression works particularly well for BVHs, which naturally lead to conservative, incremental encoding. This can significantly reduce the size of the acceleration structure (often halving the size of BVH nodes), at the cost of introducing additional overheads.
+     - an approach to BVH compression that improves upon fully-compressed wide BVHs by introducing a new dedicated node type for compressed multi-leaf nodes where applicable, while using fast, uncompressed BVH nodes for interior nodes and isolated individual leaf nodes.
+     - Fonte
+        - <https://www.researchgate.net/profile/Carsten-Benthin/publication/326762122_Compressed-leaf_bounding_volume_hierarchies/links/5bcf515f92851c1816bb3308/Compressed-leaf-bounding-volume-hierarchies.pdf>
+           @article{benthin2018compressed,
+              title={Compressed-Leaf Bounding Volume Hierarchies (originally submitted, un-shortened version)},
+              author={Benthin, Carsten and Wald, Ingo and Woop, Sven and Afra, Attila T},
+              journal={Jul},
+              volume={1},
+              pages={1--6},
+              year={2018}
+            }
 
 ## Técnicas de Amostragem
 
