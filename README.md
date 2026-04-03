@@ -583,21 +583,47 @@ a priori fix the memory footprint. It can be considered as the cross-over of the
 
    - **Importance Sampling**
    - The third strategy, importance sampling, operates by a careful data-driven design of the probabilities of selecting examples in the iterative process, leading to a reduction of the variance of the stochastic gradient thus selected. Typically, the overhead associated with computing the sampling probabilities and with sampling from the resulting distribution is negligible, and hence the net effect is speedup. In terms of theory, for standard SGD this improves a non-dominant term in the complexity. On the other hand, when SGD is combined with variance reduction, then this strategy leads to the improvement of the leading constant in the complexity estimate, typically via replacing the maximum of certain datadependent quantities by their average
+   - Importance sampling (IS) is a well-known Monte Carlo technique that can be applied to compute integrals involving target probability density functions (p.d.f.’s) (Robert and Casella, 2004; Liu, 2008). The standard IS technique draws samples from a single proposal p.d.f. and assigns them weights based on the ratio between the target and the proposal p.d.f.’s, both valuated at the sample value. The choice of a suitable proposal p.d.f. is crucial for obtaining a good approximation of the target p.d.f. using the IS method. Indeed, although the validity of this approach is guaranteed under mild assumptions, the variance of the estimator depends on the discrepancy between the shape of the proposal and the target
    - Fonte
-   - <https://www.jmlr.org/papers/volume19/16-241/16-241.pdf>
-      @article{csiba2018importance,
-        title={Importance sampling for minibatches},
-        author={Csiba, Dominik and Richt{\'a}rik, Peter},
-        journal={Journal of Machine Learning Research},
-        volume={19},
-        number={27},
-        pages={1--21},
-        year={2018}
-      }
+      - <https://www.jmlr.org/papers/volume19/16-241/16-241.pdf>
+         @article{csiba2018importance,
+           title={Importance sampling for minibatches},
+           author={Csiba, Dominik and Richt{\'a}rik, Peter},
+           journal={Journal of Machine Learning Research},
+           volume={19},
+           number={27},
+           pages={1--21},
+           year={2018}
+         }
 
    - **Multiple Importance Sampling (MIS)**
+   - e Adaptive Multiple Importance Sampling algorithm is aimed at an optimal recycling of past simulations in an iterated importance sampling (IS) scheme. The difference with earlier adaptive IS implementations like Population Monte Carlo is that the importance weights of all simulated values, past as well as present, are recomputed at each iteration, following the technique of the deterministic multiple mixture estimator of Owen & Zhou (J. Amer. Statist. Assoc., 95, 2000, 135). Although the convergence properties of the algorithm cannot be investigated, we demonstrate through a challenging banana shape target distribution and a population genetics example that the improvement brought by this technique is substantial.
+   - A powerful approach is based on using a population of different proposal p.d.f.’s. This approach is often referred to as multiple importance sampling (MIS) and several possible implementations have been proposed depending on the specific assumptions of the problem, for example, the knowledge of the normalizing constants, prior information of the proposals
+   - In general, MIS strategies provide more robust algorithms, since they avoid entrusting the performance of the method to a single proposal. 
+   - Fonte
+      - <https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1467-9469.2011.00756.x?casa_token=J4qL9nYO6McAAAAA%3AyuWO9Oh6XISrKaUuY7gf1IasvK9EwOgUZMberrsZGH2OnYqzk_D9QHIiiq_bsrV7gFnRiFfov6e3EWverA>
+         @article{cornuet2012adaptive,
+           title={Adaptive multiple importance sampling},
+           author={CORNUET, JEAN-MARIE and MARIN, JEAN-MICHEL and Mira, Antonietta and Robert, Christian P},
+           journal={Scandinavian Journal of Statistics},
+           volume={39},
+           number={4},
+           pages={798--812},
+           year={2012},
+           publisher={Wiley Online Library}
+         }
+   - <https://projecteuclid.org/journals/statistical-science/volume-34/issue-1/Generalized-Multiple-Importance-Sampling/10.1214/18-STS668.pdf>
+      @article{elvira2019generalized,
+        title={Generalized multiple importance sampling},
+        author={Elvira, V{\'\i}ctor and Martino, Luca and Luengo, David and Bugallo, M{\'o}nica F},
+        year={2019}
+      }
    - **Stratified Sampling**
+   - Stratified sampling is a sampling method used by researchers to divide a bigger population into subgroups or strata, which can then be further used to draw samples using a random sampling method
+   - Fonte:
+      - <https://researcher.life/blog/article/what-is-stratified-sampling-definition-types-examples/>
    - **Blue Noise Sampling**
+   - 
 
 ## O que comparar
 
