@@ -582,6 +582,19 @@ a priori fix the memory footprint. It can be considered as the cross-over of the
 ## Técnicas de Amostragem
 
    - **Importance Sampling**
+   - The third strategy, importance sampling, operates by a careful data-driven design of the probabilities of selecting examples in the iterative process, leading to a reduction of the variance of the stochastic gradient thus selected. Typically, the overhead associated with computing the sampling probabilities and with sampling from the resulting distribution is negligible, and hence the net effect is speedup. In terms of theory, for standard SGD this improves a non-dominant term in the complexity. On the other hand, when SGD is combined with variance reduction, then this strategy leads to the improvement of the leading constant in the complexity estimate, typically via replacing the maximum of certain datadependent quantities by their average
+   - Fonte
+   - <https://www.jmlr.org/papers/volume19/16-241/16-241.pdf>
+      @article{csiba2018importance,
+        title={Importance sampling for minibatches},
+        author={Csiba, Dominik and Richt{\'a}rik, Peter},
+        journal={Journal of Machine Learning Research},
+        volume={19},
+        number={27},
+        pages={1--21},
+        year={2018}
+      }
+
    - **Multiple Importance Sampling (MIS)**
    - **Stratified Sampling**
    - **Blue Noise Sampling**
